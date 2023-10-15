@@ -13,7 +13,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-var envTest = tester.NewEnvTest(EnvAPIKey)
+var envTest = tester.NewEnvTest(EnvAPIKey, EnvPersonalAccessToken)
 
 func TestNewDNSProvider(t *testing.T) {
 	testCases := []struct {
@@ -32,7 +32,7 @@ func TestNewDNSProvider(t *testing.T) {
 			envVars: map[string]string{
 				EnvAPIKey: "",
 			},
-			expected: "gandi: some credentials information are missing: GANDIV5_API_KEY",
+			expected: "gandiv5: credentials information are missing",
 		},
 	}
 
@@ -69,7 +69,7 @@ func TestNewDNSProviderConfig(t *testing.T) {
 		},
 		{
 			desc:     "missing credentials",
-			expected: "gandiv5: no API Key given",
+			expected: "gandiv5: credentials information are missing",
 		},
 	}
 
@@ -115,11 +115,14 @@ func TestDNSProvider(t *testing.T) {
 
 	// start fake RPC server
 	mux := http.NewServeMux()
+	server := httptest.NewServer(mux)
+	t.Cleanup(server.Close)
+
 	mux.HandleFunc("/domains/example.com/records/_acme-challenge.abc.def/TXT", func(rw http.ResponseWriter, req *http.Request) {
 		log.Infof("request: %s %s", req.Method, req.URL)
 
-		if req.Header.Get(apiKeyHeader) == "" {
-			http.Error(rw, `{"message": "missing API key"}`, http.StatusUnauthorized)
+		if req.Header.Get("Authorization") != "Bearer 123412341234123412341234" {
+			http.Error(rw, `{"message": "missing or malformed Authorization"}`, http.StatusUnauthorized)
 			return
 		}
 
@@ -155,16 +158,13 @@ func TestDNSProvider(t *testing.T) {
 		http.Error(rw, fmt.Sprintf(`{"message": "URL doesn't match: %s"}`, req.URL), http.StatusNotFound)
 	})
 
-	server := httptest.NewServer(mux)
-	t.Cleanup(server.Close)
-
 	// define function to override findZoneByFqdn with
 	fakeFindZoneByFqdn := func(fqdn string) (string, error) {
 		return "example.com.", nil
 	}
 
 	config := NewDefaultConfig()
-	config.APIKey = "123412341234123412341234"
+	config.PersonalAccessToken = "123412341234123412341234"
 	config.BaseURL = server.URL
 
 	provider, err := NewDNSProviderConfig(config)

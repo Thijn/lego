@@ -1,5 +1,188 @@
 # Changelog
 
+
+## [v4.14.1] - 2023-09-20
+
+### Fixed:
+- **[dnsprovider]** bunny: fix zone detection
+- **[dnsprovider]** bunny: use NRDCG fork
+- **[dnsprovider]** ovh: update client to v1.4.2
+
+## [v4.14.1] - 2023-09-19
+
+Cancelled due to CI failure.
+
+## [v4.14.0] - 2023-08-20
+
+### Added:
+- **[dnsprovider]** Add DNS provider for Yandex 360
+- **[dnsprovider]** Add DNS provider for cloud.ru
+- **[httpprovider]** Adding S3 support for HTTP domain validation
+
+### Changed:
+- **[cli]** Allow to set EAB kid and hmac via environment variables
+- **[dnsprovider]** Migrate to aws-sdk-go-v2 (lightsail, route53)
+
+### Fixed:
+- **[dnsprovider]** nearlyfreespeech: fix authentication
+- **[dnsprovider]** pdns: fix notify
+- **[dnsprovider]** route53: avoid unexpected records deletion
+
+## [v4.13.3] - 2023-07-25
+
+### Fixed:
+- **[dnsprovider]** azuredns: fix configuration from env vars
+- **[dnsprovider]** gcore: change API domain
+
+## [v4.13.2] - 2023-07-21
+
+### Fixed:
+- **[dnsprovider]** servercow: fix regression
+
+## [v4.13.1] - 2023-07-20
+
+### Added:
+- **[dnsprovider]** Add DNS provider for IPv64
+- **[dnsprovider]** Add DNS provider for Metaname
+- **[dnsprovider]** Add DNS provider for RcodeZero
+- **[dnsprovider]** Add DNS provider for Efficient IP
+- **[dnsprovider]** azure: new implementation based on the new API client
+- **[lib]** Experimental option to force DNS queries to use TCP
+
+### Changed:
+- **[dnsprovider]** cloudflare: update api client to v0.70.0
+
+### Fixed:
+- **[dnsprovider,cname]** fix: ensure case-insensitive comparison of CNAME records
+- **[cli]** fix: list command
+- **[lib]** fix: ARI explanationURL
+
+## [v4.13.0] - 2023-07-20
+
+Cancelled due to a CI issue (no space left on device).
+
+## [v4.12.2] - 2023-06-19
+
+### Fixed:
+- **[dnsprovider]** dnsmadeeasy: fix DeleteRecord
+- **[lib]** fix: read status code from response
+
+## [v4.12.1] - 2023-06-06
+
+### Fixed:
+- **[dnsprovider]** pdns: fix record value
+
+## [v4.12.0] - 2023-05-28
+
+### Added:
+- **[lib,cli]** Initial ACME Renewal Info (ARI) Implementation
+- **[dnsprovider]** Add DNS provider for Derak Cloud
+- **[dnsprovider]** route53: pass ExternalID property to STS:AssumeRole API operation
+- **[lib,cli]** Support custom duration for certificate
+
+### Changed:
+- **[dnsprovider]** Refactor DNS provider and client implementations
+
+### Fixed:
+- **[dnsprovider]** autodns: fixes wrong zone in api call if CNAME is used
+- **[cli]** fix: archive only domain-related files on revoke
+
+## [v4.11.0] - 2023-05-02
+
+### Added:
+- **[lib]** Support for certificate with raw IP SAN (RFC8738)
+- **[dnsprovider]** Add Brandit.com as DNS provider
+- **[dnsprovider]** Add DNS provider for Bunny
+- **[dnsprovider]** Add DNS provider for Nodion
+- **[dnsprovider]** Add Google Domains as DNS provider
+- **[dnsprovider]** Add DNS provider for Plesk
+
+### Changed:
+- **[cli]** feat: add LEGO_CERT_PEM_PATH and LEGO_CERT_PFX_PATH to run hook
+- **[lib,cli]** feat: add RSA 3072
+- **[dnsprovider]** gcloud: update google APIs to latest version
+- **[lib,dnsprovider,cname]** chore: replace GetRecord by GetChallengeInfo
+
+### Fixed:
+- **[dnsprovider]** rimuhosting: fix API base URL
+
+## [v4.10.2] - 2023-02-26
+
+Fix Docker image builds.
+
+## [v4.10.1] - 2023-02-25
+
+### Fixed:
+- **[dnsprovider,cname]** acmedns: fix CNAME support
+- **[dnsprovider]** dynu: fix subdomain support
+
+## [v4.10.0] - 2023-02-10
+
+### Added:
+- **[dnsprovider]** Add DNS provider for dnsHome.de
+- **[dnsprovider]** Add DNS provider for Liara
+- **[dnsprovider]** Add DNS provider for UltraDNS
+- **[dnsprovider]** Add DNS provider for Websupport
+
+### Changed:
+- **[dnsprovider]** ibmcloud: add support for subdomains
+- **[dnsprovider]** infomaniak: CNAME support
+- **[dnsprovider]** namesilo: add cleanup before add a DNS record
+- **[dnsprovider]** route53: Allow static credentials to be supplied
+- **[dnsprovider]** tencentcloud: support punycode domain
+
+### Fixed:
+- **[dnsprovider]** alidns: filter on record type
+- **[dnsprovider]** arvancloud: replace arvancloud.com by arvancloud.ir
+- **[dnsprovider]** hetzner: improve zone ID detection
+- **[dnsprovider]** luadns: removed dot suffix from authzone while searching for zone
+- **[dnsprovider]** pdns: fix usage of notify only when zone kind is Master or Slave
+- **[dnsprovider]** return an error when extracting record name
+
+## [v4.9.1] - 2022-11-25
+
+### Changed:
+- 
+- **[lib,cname]** cname: add log about CNAME entries
+- **[dnsprovider]** regru: improve error handling
+
+### Fixed:
+- 
+- **[dnsprovider,cname]** fix CNAME support for multiple DNS providers
+- **[dnsprovider,cname]** duckdns: fix CNAME support
+- **[dnsprovider,cname]** oraclecloud: use fqdn to resolve zone
+- **[dnsprovider]** hurricane: fix CNAME support
+- **[lib,cname]** cname: stop trying to traverse cname if none have been found
+
+## [v4.9.0] - 2022-10-03
+
+### Added:
+
+- **[dnsprovider]** Add DNS provider for CIVO
+- **[dnsprovider]** Add DNS provider for VK Cloud
+- **[dnsprovider]** Add DNS provider for YandexCloud
+- **[dnsprovider]** digitalocean: configurable base URL
+- **[dnsprovider]** loopia: add configurable API endpoint
+- **[dnsprovider]** pdns: notify secondary servers after updates
+
+### Changed:
+
+- **[dnsprovider]** allinkl: removed deprecated sha1 hashing
+- **[dnsprovider]** auroradns: update authentification
+- **[dnsprovider]** dnspod: deprecated. Use Tencent Cloud instead.
+- **[dnsprovider]** exoscale: migrate to API v2 endpoints
+- **[dnsprovider]** gcloud: update golang.org/x/oauth2
+- **[dnsprovider]** lightsail: cleanup
+- **[dnsprovider]** sakuracloud: update api client library
+- **[cname]** take out CNAME support from experimental features
+- **[lib,cname]** add recursive CNAME lookup support
+- **[lib]** Remove embedded issuer certificates from issued certificate if bundle is false
+
+### Fixed:
+- **[dnsprovider]** luadns: fix cname support
+- **[dnsprovider]** njalla: fix record id unmarshal error
+- **[dnsprovider]** tencentcloud: fix subdomain error
+
 ## [v4.8.0] - 2022-06-30
 
 ### Added
@@ -322,7 +505,7 @@ Cancelled due to a CI issue, replaced by v4.5.2.
 - **[dnsprovider]** azure: Allow for the use of MSI
 - **[dnsprovider]** constellix: improve challenge.
 - **[dnsprovider]** godaddy: allow parallel solve.
-- **[dnsprovider]** namedotcom: get the actual registered domain so we can remove just that from the hostname to be created
+- **[dnsprovider]** namedotcom: get the actual registered domain, so we can remove just that from the hostname to be created
 - **[dnsprovider]** transip: updated the client to v6
 
 ### Fixed:
@@ -426,7 +609,7 @@ Cancelled due to a CI issue, replaced by v4.5.2.
 
 ## [v3.0.1] - 2019-08-14
 
-There was a problem when creating the tag v3.0.1, this tag has been invalidate.
+There was a problem when creating the tag v3.0.1, this tag has been invalidated.
 
 ## [v3.0.0] - 2019-08-05
 
@@ -718,7 +901,7 @@ There was a problem when creating the tag v3.0.1, this tag has been invalidate.
 - lib: The `DeleteRegistration` function on `acme.Client`. This deletes the registration as currently configured in the client.
 - lib: The `ObtainCertificateForCSR` function on `acme.Client`. The function allows to request a certificate for an already existing CSR.
 - CLI: The `--csr` switch. Allows to use already existing CSRs for certificate requests on the command line.
-- CLI: The `--pem` flag. This will change the certificate output so it outputs a .pem file concatanating the .key and .crt files together.
+- CLI: The `--pem` flag. This will change the certificate output, so it outputs a .pem file concatanating the .key and .crt files together.
 - CLI: The `--dns-resolvers` flag. Allows for users to override the default DNS servers used for recursive lookup.
 - lib: Added a memcached provider for the HTTP challenge.
 - CLI: The `--memcached-host` flag. This allows to use memcached for challenge storage.
@@ -740,11 +923,11 @@ There was a problem when creating the tag v3.0.1, this tag has been invalidate.
 - lib: The library will now skip challenge solving if a valid Authz already exists.
 
 ### Removed:
-- lib: The library will no longer check for auto renewed certificates. This has been removed from the spec and is not supported in Boulder.
+- lib: The library will no longer check for auto-renewed certificates. This has been removed from the spec and is not supported in Boulder.
 
 ### Fixed:
 - lib: Fix a problem with the Route53 provider where it was possible the verification was published to a private zone.
-- lib: Loading an account from file should fail if a integral part is nil
+- lib: Loading an account from file should fail if an integral part is nil
 - lib: Fix a potential issue where the Dyn provider could resolve to an incorrect zone.
 - lib: If a registration encounteres a conflict, the old registration is now recovered.
 - CLI: The account.json file no longer has the executable flag set.
@@ -812,7 +995,7 @@ There was a problem when creating the tag v3.0.1, this tag has been invalidate.
 
 ### Changed:
 - lib: NewClient does no longer accept the optPort parameter
-- lib: ObtainCertificate now returns a SAN certificate if you pass more then one domain.
+- lib: ObtainCertificate now returns a SAN certificate if you pass more than one domain.
 - lib: GetOCSPForCert now returns the parsed OCSP response instead of just the status.
 - lib: ObtainCertificate has a new parameter `privKey crypto.PrivateKey` which lets you reuse an existing private key for new certificates.
 - lib: RenewCertificate now expects the PrivateKey property of the CertificateResource to be set only if you want to reuse the key.

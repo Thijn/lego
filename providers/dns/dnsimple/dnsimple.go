@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/dnsimple/dnsimple-go/dnsimple"
@@ -91,9 +90,9 @@ func NewDNSProviderConfig(config *Config) (*DNSProvider, error) {
 
 // Present creates a TXT record to fulfill the dns-01 challenge.
 func (d *DNSProvider) Present(domain, token, keyAuth string) error {
-	fqdn, value := dns01.GetRecord(domain, keyAuth)
+	info := dns01.GetChallengeInfo(domain, keyAuth)
 
-	zoneName, err := d.getHostedZone(domain)
+	zoneName, err := d.getHostedZone(info.EffectiveFQDN)
 	if err != nil {
 		return fmt.Errorf("dnsimple: %w", err)
 	}
@@ -103,7 +102,11 @@ func (d *DNSProvider) Present(domain, token, keyAuth string) error {
 		return fmt.Errorf("dnsimple: %w", err)
 	}
 
-	recordAttributes := newTxtRecord(zoneName, fqdn, value, d.config.TTL)
+	recordAttributes, err := newTxtRecord(zoneName, info.EffectiveFQDN, info.Value, d.config.TTL)
+	if err != nil {
+		return fmt.Errorf("dnsimple: %w", err)
+	}
+
 	_, err = d.client.Zones.CreateRecord(context.Background(), accountID, zoneName, recordAttributes)
 	if err != nil {
 		return fmt.Errorf("dnsimple: API call failed: %w", err)
@@ -114,9 +117,9 @@ func (d *DNSProvider) Present(domain, token, keyAuth string) error {
 
 // CleanUp removes the TXT record matching the specified parameters.
 func (d *DNSProvider) CleanUp(domain, token, keyAuth string) error {
-	fqdn, _ := dns01.GetRecord(domain, keyAuth)
+	info := dns01.GetChallengeInfo(domain, keyAuth)
 
-	records, err := d.findTxtRecords(domain, fqdn)
+	records, err := d.findTxtRecords(info.EffectiveFQDN)
 	if err != nil {
 		return fmt.Errorf("dnsimple: %w", err)
 	}
@@ -144,9 +147,9 @@ func (d *DNSProvider) Timeout() (timeout, interval time.Duration) {
 }
 
 func (d *DNSProvider) getHostedZone(domain string) (string, error) {
-	authZone, err := dns01.FindZoneByFqdn(dns01.ToFqdn(domain))
+	authZone, err := dns01.FindZoneByFqdn(domain)
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("could not find zone for FQDN %q: %w", domain, err)
 	}
 
 	accountID, err := d.getAccountID()
@@ -175,8 +178,8 @@ func (d *DNSProvider) getHostedZone(domain string) (string, error) {
 	return hostedZone.Name, nil
 }
 
-func (d *DNSProvider) findTxtRecords(domain, fqdn string) ([]dnsimple.ZoneRecord, error) {
-	zoneName, err := d.getHostedZone(domain)
+func (d *DNSProvider) findTxtRecords(fqdn string) ([]dnsimple.ZoneRecord, error) {
+	zoneName, err := d.getHostedZone(fqdn)
 	if err != nil {
 		return nil, err
 	}
@@ -186,9 +189,12 @@ func (d *DNSProvider) findTxtRecords(domain, fqdn string) ([]dnsimple.ZoneRecord
 		return nil, err
 	}
 
-	recordName := extractRecordName(fqdn, zoneName)
+	subDomain, err := dns01.ExtractSubDomain(fqdn, zoneName)
+	if err != nil {
+		return nil, err
+	}
 
-	result, err := d.client.Zones.ListRecords(context.Background(), accountID, zoneName, &dnsimple.ZoneRecordListOptions{Name: &recordName, Type: dnsimple.String("TXT"), ListOptions: dnsimple.ListOptions{}})
+	result, err := d.client.Zones.ListRecords(context.Background(), accountID, zoneName, &dnsimple.ZoneRecordListOptions{Name: &subDomain, Type: dnsimple.String("TXT"), ListOptions: dnsimple.ListOptions{}})
 	if err != nil {
 		return nil, fmt.Errorf("API call has failed: %w", err)
 	}
@@ -196,23 +202,18 @@ func (d *DNSProvider) findTxtRecords(domain, fqdn string) ([]dnsimple.ZoneRecord
 	return result.Data, nil
 }
 
-func newTxtRecord(zoneName, fqdn, value string, ttl int) dnsimple.ZoneRecordAttributes {
-	name := extractRecordName(fqdn, zoneName)
+func newTxtRecord(zoneName, fqdn, value string, ttl int) (dnsimple.ZoneRecordAttributes, error) {
+	subDomain, err := dns01.ExtractSubDomain(fqdn, zoneName)
+	if err != nil {
+		return dnsimple.ZoneRecordAttributes{}, err
+	}
 
 	return dnsimple.ZoneRecordAttributes{
 		Type:    "TXT",
-		Name:    &name,
+		Name:    &subDomain,
 		Content: value,
 		TTL:     ttl,
-	}
-}
-
-func extractRecordName(fqdn, zone string) string {
-	name := dns01.UnFqdn(fqdn)
-	if idx := strings.Index(name, "."+zone); idx != -1 {
-		return name[:idx]
-	}
-	return name
+	}, nil
 }
 
 func (d *DNSProvider) getAccountID() (string, error) {

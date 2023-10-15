@@ -49,7 +49,7 @@ lego comes with [support for many]({{< ref "dns#dns-providers" >}}) providers,
 and you need to pick the one where your domain's DNS settings are set up.
 Typically, this is the registrar where you bought the domain, but in some cases this can be another third-party provider.
 
-For this example, let's assume you have setup CloudFlare for your domain.
+For this example, let's assume you have set up CloudFlare for your domain.
 
 Execute this command:
 
@@ -122,7 +122,7 @@ postfix_cert_dir="/etc/postfix/certificates"
 # our Postfix server only handles mail for @example.com domain
 if [ "$LEGO_CERT_DOMAIN" = "example.com" ]; then
   install -u postfix -g postfix -m 0644 "$LEGO_CERT_PATH" "$postfix_cert_dir"
-  install -u postfix -g postfix -m 0640 "$LEGO_KEY_PATH"  "$postfix_cert_dir"
+  install -u postfix -g postfix -m 0640 "$LEGO_CERT_KEY_PATH"  "$postfix_cert_dir"
 
   systemctl reload postfix@-service
 fi

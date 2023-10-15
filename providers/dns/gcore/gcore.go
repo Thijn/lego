@@ -57,7 +57,7 @@ type DNSProvider struct {
 	client *internal.Client
 }
 
-// NewDNSProvider returns an instance of DNSProvider configured for G-Core Labs DNS API.
+// NewDNSProvider returns an instance of DNSProvider configured for G-Core DNS API.
 func NewDNSProvider() (*DNSProvider, error) {
 	values, err := env.Get(EnvPermanentAPIToken)
 	if err != nil {
@@ -70,7 +70,7 @@ func NewDNSProvider() (*DNSProvider, error) {
 	return NewDNSProviderConfig(config)
 }
 
-// NewDNSProviderConfig return a DNSProvider instance configured for  G-Core Labs DNS API.
+// NewDNSProviderConfig return a DNSProvider instance configured for G-Core DNS API.
 func NewDNSProviderConfig(config *Config) (*DNSProvider, error) {
 	if config == nil {
 		return nil, errors.New("gcore: the configuration of the DNS provider is nil")
@@ -94,16 +94,16 @@ func NewDNSProviderConfig(config *Config) (*DNSProvider, error) {
 
 // Present creates a TXT record to fulfill the dns-01 challenge.
 func (d *DNSProvider) Present(domain, _, keyAuth string) error {
-	fqdn, value := dns01.GetRecord(domain, keyAuth)
+	info := dns01.GetChallengeInfo(domain, keyAuth)
 
 	ctx := context.Background()
 
-	zone, err := d.guessZone(ctx, fqdn)
+	zone, err := d.guessZone(ctx, info.EffectiveFQDN)
 	if err != nil {
 		return fmt.Errorf("gcore: %w", err)
 	}
 
-	err = d.client.AddRRSet(ctx, zone, dns01.UnFqdn(fqdn), value, d.config.TTL)
+	err = d.client.AddRRSet(ctx, zone, dns01.UnFqdn(info.EffectiveFQDN), info.Value, d.config.TTL)
 	if err != nil {
 		return fmt.Errorf("gcore: add txt record: %w", err)
 	}
@@ -113,16 +113,16 @@ func (d *DNSProvider) Present(domain, _, keyAuth string) error {
 
 // CleanUp removes the record matching the specified parameters.
 func (d *DNSProvider) CleanUp(domain, _, keyAuth string) error {
-	fqdn, _ := dns01.GetRecord(domain, keyAuth)
+	info := dns01.GetChallengeInfo(domain, keyAuth)
 
 	ctx := context.Background()
 
-	zone, err := d.guessZone(ctx, fqdn)
+	zone, err := d.guessZone(ctx, info.EffectiveFQDN)
 	if err != nil {
 		return fmt.Errorf("gcore: %w", err)
 	}
 
-	err = d.client.DeleteRRSet(ctx, zone, dns01.UnFqdn(fqdn))
+	err = d.client.DeleteRRSet(ctx, zone, dns01.UnFqdn(info.EffectiveFQDN))
 	if err != nil {
 		return fmt.Errorf("gcore: remove txt record: %w", err)
 	}
@@ -130,8 +130,8 @@ func (d *DNSProvider) CleanUp(domain, _, keyAuth string) error {
 	return nil
 }
 
-// Timeout returns the timeout and interval to use when checking for DNS
-// propagation. Adjusting here to cope with spikes in propagation times.
+// Timeout returns the timeout and interval to use when checking for DNS propagation.
+// Adjusting here to cope with spikes in propagation times.
 func (d *DNSProvider) Timeout() (timeout, interval time.Duration) {
 	return d.config.PropagationTimeout, d.config.PollingInterval
 }

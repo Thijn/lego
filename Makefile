@@ -26,9 +26,6 @@ image:
 	@echo Version: $(VERSION)
 	docker build -t $(LEGO_IMAGE) .
 
-publish-images:
-	seihon publish -v "$(TAG_NAME)" -v "latest" --image-name="$(LEGO_IMAGE)" --dry-run=false
-
 test: clean
 	go test -v -cover ./...
 
@@ -74,7 +71,7 @@ generate-dns:
 validate-doc: generate-dns
 validate-doc: DOC_DIRECTORIES := ./docs/ ./cmd/
 validate-doc:
-	if git diff --exit-code --quiet $(DOC_DIRECTORIES) 2>/dev/null; then \
+	@if git diff --exit-code --quiet $(DOC_DIRECTORIES) 2>/dev/null; then \
 		echo 'All documentation changes are done the right way.'; \
 	else \
 		echo 'The documentation must be regenerated, please use `make generate-dns`.'; \

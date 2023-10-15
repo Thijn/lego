@@ -63,7 +63,7 @@ type DNSProvider struct {
 // For a more paranoid setup, provide CLOUDFLARE_DNS_API_TOKEN and CLOUDFLARE_ZONE_API_TOKEN.
 //
 // The email and API key should be avoided, if possible.
-// Instead setup a API token with both Zone:Read and DNS:Edit permission, and pass the CLOUDFLARE_DNS_API_TOKEN environment variable.
+// Instead, set up an API token with both Zone:Read and DNS:Edit permission, and pass the CLOUDFLARE_DNS_API_TOKEN environment variable.
 // You can split the Zone:Read and DNS:Edit permissions across multiple API tokens:
 // in this case pass both CLOUDFLARE_ZONE_API_TOKEN and CLOUDFLARE_DNS_API_TOKEN accordingly.
 func NewDNSProvider() (*DNSProvider, error) {
@@ -122,11 +122,11 @@ func (d *DNSProvider) Timeout() (timeout, interval time.Duration) {
 
 // Present creates a TXT record to fulfill the dns-01 challenge.
 func (d *DNSProvider) Present(domain, token, keyAuth string) error {
-	fqdn, value := dns01.GetRecord(domain, keyAuth)
+	info := dns01.GetChallengeInfo(domain, keyAuth)
 
-	authZone, err := dns01.FindZoneByFqdn(fqdn)
+	authZone, err := dns01.FindZoneByFqdn(info.EffectiveFQDN)
 	if err != nil {
-		return fmt.Errorf("cloudflare: %w", err)
+		return fmt.Errorf("cloudflare: could not find zone for domain %q (%s): %w", domain, info.EffectiveFQDN, err)
 	}
 
 	zoneID, err := d.client.ZoneIDByName(authZone)
@@ -134,10 +134,10 @@ func (d *DNSProvider) Present(domain, token, keyAuth string) error {
 		return fmt.Errorf("cloudflare: failed to find zone %s: %w", authZone, err)
 	}
 
-	dnsRecord := cloudflare.DNSRecord{
+	dnsRecord := cloudflare.CreateDNSRecordParams{
 		Type:    "TXT",
-		Name:    dns01.UnFqdn(fqdn),
-		Content: value,
+		Name:    dns01.UnFqdn(info.EffectiveFQDN),
+		Content: info.Value,
 		TTL:     d.config.TTL,
 	}
 
@@ -146,26 +146,22 @@ func (d *DNSProvider) Present(domain, token, keyAuth string) error {
 		return fmt.Errorf("cloudflare: failed to create TXT record: %w", err)
 	}
 
-	if !response.Success {
-		return fmt.Errorf("cloudflare: failed to create TXT record: %+v %+v", response.Errors, response.Messages)
-	}
-
 	d.recordIDsMu.Lock()
-	d.recordIDs[token] = response.Result.ID
+	d.recordIDs[token] = response.ID
 	d.recordIDsMu.Unlock()
 
-	log.Infof("cloudflare: new record for %s, ID %s", domain, response.Result.ID)
+	log.Infof("cloudflare: new record for %s, ID %s", domain, response.ID)
 
 	return nil
 }
 
 // CleanUp removes the TXT record matching the specified parameters.
 func (d *DNSProvider) CleanUp(domain, token, keyAuth string) error {
-	fqdn, _ := dns01.GetRecord(domain, keyAuth)
+	info := dns01.GetChallengeInfo(domain, keyAuth)
 
-	authZone, err := dns01.FindZoneByFqdn(fqdn)
+	authZone, err := dns01.FindZoneByFqdn(info.EffectiveFQDN)
 	if err != nil {
-		return fmt.Errorf("cloudflare: %w", err)
+		return fmt.Errorf("cloudflare: could not find zone for domain %q (%s): %w", domain, info.EffectiveFQDN, err)
 	}
 
 	zoneID, err := d.client.ZoneIDByName(authZone)
@@ -178,7 +174,7 @@ func (d *DNSProvider) CleanUp(domain, token, keyAuth string) error {
 	recordID, ok := d.recordIDs[token]
 	d.recordIDsMu.Unlock()
 	if !ok {
-		return fmt.Errorf("cloudflare: unknown record ID for '%s'", fqdn)
+		return fmt.Errorf("cloudflare: unknown record ID for '%s'", info.EffectiveFQDN)
 	}
 
 	err = d.client.DeleteDNSRecord(context.Background(), zoneID, recordID)

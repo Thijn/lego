@@ -1,7 +1,12 @@
 package internal
 
 import (
+	"context"
+	"net/http"
+	"net/url"
+	"os"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/require"
 )
@@ -13,13 +18,22 @@ const (
 )
 
 func TestRemoveRecord(t *testing.T) {
-	client := NewClient(officialTestUser, officialTestPassword)
+	// TODO(ldez): remove skip when the reg.ru API will be fixed.
+	t.Skip("there is a bug with the reg.ru API: INTERNAL_API_ERROR: Внутренняя ошибка, status code: 503")
 
-	err := client.RemoveTxtRecord("test.ru", "_acme-challenge", "txttxttxt")
+	client := NewClient(officialTestUser, officialTestPassword)
+	client.HTTPClient = &http.Client{Timeout: 30 * time.Second}
+
+	err := client.RemoveTxtRecord(context.Background(), "test.ru", "_acme-challenge", "txttxttxt")
 	require.NoError(t, err)
 }
 
 func TestRemoveRecord_errors(t *testing.T) {
+	// TODO(ldez): remove skip when the reg.ru API will be fixed.
+	if os.Getenv("CI") == "true" {
+		t.Skip("there is a bug with the reg.ru and GitHub action: dial tcp 194.58.116.30:443: i/o timeout")
+	}
+
 	testCases := []struct {
 		desc     string
 		domain   string
@@ -52,21 +66,32 @@ func TestRemoveRecord_errors(t *testing.T) {
 			t.Parallel()
 
 			client := NewClient(test.username, test.username)
+			client.HTTPClient = &http.Client{Timeout: 30 * time.Second}
+			client.baseURL, _ = url.Parse(test.baseURL)
 
-			err := client.RemoveTxtRecord(test.domain, "_acme-challenge", "txttxttxt")
+			err := client.RemoveTxtRecord(context.Background(), test.domain, "_acme-challenge", "txttxttxt")
 			require.EqualError(t, err, test.expected)
 		})
 	}
 }
 
 func TestAddTXTRecord(t *testing.T) {
-	client := NewClient(officialTestUser, officialTestPassword)
+	// TODO(ldez): remove skip when the reg.ru API will be fixed.
+	t.Skip("there is a bug with the reg.ru API: INTERNAL_API_ERROR: Внутренняя ошибка, status code: 503")
 
-	err := client.AddTXTRecord("test.ru", "_acme-challenge", "txttxttxt")
+	client := NewClient(officialTestUser, officialTestPassword)
+	client.HTTPClient = &http.Client{Timeout: 30 * time.Second}
+
+	err := client.AddTXTRecord(context.Background(), "test.ru", "_acme-challenge", "txttxttxt")
 	require.NoError(t, err)
 }
 
 func TestAddTXTRecord_errors(t *testing.T) {
+	// TODO(ldez): remove skip when the reg.ru API will be fixed.
+	if os.Getenv("CI") == "true" {
+		t.Skip("there is a bug with the reg.ru and GitHub action: dial tcp 194.58.116.30:443: i/o timeout")
+	}
+
 	testCases := []struct {
 		desc     string
 		domain   string
@@ -99,8 +124,10 @@ func TestAddTXTRecord_errors(t *testing.T) {
 			t.Parallel()
 
 			client := NewClient(test.username, test.username)
+			client.HTTPClient = &http.Client{Timeout: 30 * time.Second}
+			client.baseURL, _ = url.Parse(test.baseURL)
 
-			err := client.AddTXTRecord(test.domain, "_acme-challenge", "txttxttxt")
+			err := client.AddTXTRecord(context.Background(), test.domain, "_acme-challenge", "txttxttxt")
 			require.EqualError(t, err, test.expected)
 		})
 	}

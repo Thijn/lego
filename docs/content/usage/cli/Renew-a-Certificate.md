@@ -36,7 +36,7 @@ lego comes with [support for many]({{< ref "dns#dns-providers" >}}) providers,
 and you need to pick the one where your domain's DNS settings are set up.
 Typically, this is the registrar where you bought the domain, but in some cases this can be another third-party provider.
 
-For this example, let's assume you have setup CloudFlare for your domain.
+For this example, let's assume you have set up CloudFlare for your domain.
 
 Execute this command:
 
@@ -83,7 +83,7 @@ You can help further, by adjusting your crontab entry, like so:
 #0 0 * * *   /usr/bin/lego ... renew
 
 # instead, use a randomly chosen time:
-3 35 * * *  /usr/bin/lego ... renew
+35 3 * * *  /usr/bin/lego ... renew
 ```
 
 If you use systemd timers, consider doing something similar, and/or introduce a `RandomizedDelaySec`:
@@ -107,4 +107,4 @@ RandomizedDelaySec=1h
 WantedBy=timers.target
 ```
 
-[^loadspikes]: See [Github issue #1656](https://github.com/go-acme/lego/issues/1656) for an excellent problem description.
+[^loadspikes]: See [GitHub issue #1656](https://github.com/go-acme/lego/issues/1656) for an excellent problem description.

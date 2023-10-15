@@ -98,12 +98,16 @@ For more information, you can read about the different methods of authentication
 - [Keystone username/password](https://docs.openstack.org/keystone/latest/user/supported_clients.html)
 - [Keystone application credentials](https://docs.openstack.org/keystone/latest/user/application_credentials.html)
 
+Public cloud providers with support for Designate:
+
+- [Fuga Cloud](https://fuga.cloud/)
+
 
 
 ## More information
 
 - [API documentation](https://docs.openstack.org/designate/latest/)
-- [Go client](https://godoc.org/github.com/gophercloud/gophercloud/openstack/dns/v2)
+- [Go client](https://pkg.go.dev/github.com/gophercloud/gophercloud/openstack/dns/v2)
 
 <!-- THIS DOCUMENTATION IS AUTO-GENERATED. PLEASE DO NOT EDIT. -->
 <!-- providers/dns/designate/designate.toml -->

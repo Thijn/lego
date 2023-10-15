@@ -11,44 +11,41 @@ jobs:
     name: Release version
     runs-on: ubuntu-latest
     env:
-      GO_VERSION: 1.19
-      SEIHON_VERSION: v0.8.3
+      GO_VERSION: stable
       CGO_ENABLED: 0
 
     steps:
-      - name: Set up Go ${{ env.GO_VERSION }}
-        uses: actions/setup-go@v2
+      # temporary workaround for an error in free disk space action
+      # https://github.com/jlumbroso/free-disk-space/issues/14
+      - name: Update Package List and Remove Dotnet
+        run: |
+          sudo apt-get update
+          sudo apt-get remove -y '^dotnet-.*'
+
+      # https://github.com/marketplace/actions/free-disk-space-ubuntu
+      - name: Free Disk Space
+        uses: jlumbroso/free-disk-space@main
         with:
-          go-version: ${{ env.GO_VERSION }}
+          # this might remove tools that are actually needed
+          tool-cache: false
+
+          # all of these default to true
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: false
 
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Cache Go modules
-        uses: actions/cache@v2
+      - name: Set up Go ${{ env.GO_VERSION }}
+        uses: actions/setup-go@v4
         with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
-
-      # https://goreleaser.com/ci/actions/
-      - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v2
-        with:
-          version: latest
-          args: release --rm-dist --timeout=60m
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_REPO }}
-
-      # Install Docker image multi-arch builder
-      - name: Install Seihon ${{ env.SEIHON_VERSION }}
-        if: startsWith(github.ref, 'refs/tags/v')
-        run: |
-          curl -sSfL https://raw.githubusercontent.com/ldez/seihon/master/godownloader.sh | sh -s -- -b $(go env GOPATH)/bin ${SEIHON_VERSION}
-          seihon --version
+          go-version: ${{ env.GO_VERSION }}
 
       - name: Docker Login
         env:
@@ -56,5 +53,17 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin
 
-      - name: Publish Docker Images (Seihon)
-        run: make publish-images
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # https://goreleaser.com/ci/actions/
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v4
+        with:
+          version: latest
+          args: release -p 1 --clean --timeout=90m
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_REPO }}

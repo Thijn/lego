@@ -2,6 +2,7 @@ package versio
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -134,12 +135,12 @@ func TestDNSProvider_Present(t *testing.T) {
 		{
 			desc:          "FailToFindZone",
 			handler:       muxFailToFindZone(),
-			expectedError: `versio: 401: request failed: ObjectDoesNotExist|Domain not found`,
+			expectedError: `versio: [status code: 401] 401: ObjectDoesNotExist|Domain not found`,
 		},
 		{
 			desc:          "FailToCreateTXT",
 			handler:       muxFailToCreateTXT(),
-			expectedError: `versio: 400: request failed: ProcessError|DNS record invalid type _acme-challenge.example.eu. TST`,
+			expectedError: `versio: [status code: 400] 400: ProcessError|DNS record invalid type _acme-challenge.example.eu. TST`,
 		},
 	}
 
@@ -181,7 +182,7 @@ func TestDNSProvider_CleanUp(t *testing.T) {
 		{
 			desc:          "FailToFindZone",
 			handler:       muxFailToFindZone(),
-			expectedError: `versio: 401: request failed: ObjectDoesNotExist|Domain not found`,
+			expectedError: `versio: [status code: 401] 401: ObjectDoesNotExist|Domain not found`,
 		},
 	}
 
@@ -231,7 +232,10 @@ func muxSuccess() *http.ServeMux {
 	})
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		log.Printf("Not Found for Request: (%+v)\n\n", r)
+		log.Printf("unexpected request: %+v\n\n", r)
+		data, _ := io.ReadAll(r.Body)
+		defer func() { _ = r.Body.Close() }()
+		log.Println(string(data))
 		http.NotFound(w, r)
 	})
 
@@ -265,6 +269,14 @@ func muxFailToCreateTXT() *http.ServeMux {
 			return
 		}
 		w.WriteHeader(http.StatusBadRequest)
+	})
+
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("unexpected request: %+v\n\n", r)
+		data, _ := io.ReadAll(r.Body)
+		defer func() { _ = r.Body.Close() }()
+		log.Println(string(data))
+		http.NotFound(w, r)
 	})
 
 	return mux

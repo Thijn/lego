@@ -93,11 +93,11 @@ func NewDNSProviderConfig(config *Config) (*DNSProvider, error) {
 
 // Present creates a TXT record using the specified parameters.
 func (d *DNSProvider) Present(domain, token, keyAuth string) error {
-	fqdn, value := dns01.GetRecord(domain, keyAuth)
+	challengeInfo := dns01.GetChallengeInfo(domain, keyAuth)
 
-	authZone, err := dns01.FindZoneByFqdn(fqdn)
+	authZone, err := dns01.FindZoneByFqdn(challengeInfo.EffectiveFQDN)
 	if err != nil {
-		return fmt.Errorf("inwx: %w", err)
+		return fmt.Errorf("inwx: could not find zone for domain %q (%s): %w", domain, challengeInfo.EffectiveFQDN, err)
 	}
 
 	info, err := d.client.Account.Login()
@@ -108,7 +108,7 @@ func (d *DNSProvider) Present(domain, token, keyAuth string) error {
 	defer func() {
 		errL := d.client.Account.Logout()
 		if errL != nil {
-			log.Infof("inwx: failed to logout: %v", errL)
+			log.Infof("inwx: failed to log out: %v", errL)
 		}
 	}()
 
@@ -119,9 +119,9 @@ func (d *DNSProvider) Present(domain, token, keyAuth string) error {
 
 	request := &goinwx.NameserverRecordRequest{
 		Domain:  dns01.UnFqdn(authZone),
-		Name:    dns01.UnFqdn(fqdn),
+		Name:    dns01.UnFqdn(challengeInfo.EffectiveFQDN),
 		Type:    "TXT",
-		Content: value,
+		Content: challengeInfo.Value,
 		TTL:     d.config.TTL,
 	}
 
@@ -143,11 +143,11 @@ func (d *DNSProvider) Present(domain, token, keyAuth string) error {
 
 // CleanUp removes the TXT record matching the specified parameters.
 func (d *DNSProvider) CleanUp(domain, token, keyAuth string) error {
-	fqdn, _ := dns01.GetRecord(domain, keyAuth)
+	challengeInfo := dns01.GetChallengeInfo(domain, keyAuth)
 
-	authZone, err := dns01.FindZoneByFqdn(fqdn)
+	authZone, err := dns01.FindZoneByFqdn(challengeInfo.EffectiveFQDN)
 	if err != nil {
-		return fmt.Errorf("inwx: %w", err)
+		return fmt.Errorf("inwx: could not find zone for domain %q (%s): %w", domain, challengeInfo.EffectiveFQDN, err)
 	}
 
 	info, err := d.client.Account.Login()
@@ -158,7 +158,7 @@ func (d *DNSProvider) CleanUp(domain, token, keyAuth string) error {
 	defer func() {
 		errL := d.client.Account.Logout()
 		if errL != nil {
-			log.Infof("inwx: failed to logout: %v", errL)
+			log.Infof("inwx: failed to log out: %v", errL)
 		}
 	}()
 
@@ -169,7 +169,7 @@ func (d *DNSProvider) CleanUp(domain, token, keyAuth string) error {
 
 	response, err := d.client.Nameservers.Info(&goinwx.NameserverInfoRequest{
 		Domain: dns01.UnFqdn(authZone),
-		Name:   dns01.UnFqdn(fqdn),
+		Name:   dns01.UnFqdn(challengeInfo.EffectiveFQDN),
 		Type:   "TXT",
 	})
 	if err != nil {
@@ -199,7 +199,7 @@ func (d *DNSProvider) twoFactorAuth(info *goinwx.LoginResponse) error {
 	}
 
 	if d.config.SharedSecret == "" {
-		return errors.New("two factor authentication but no shared secret is given")
+		return errors.New("two-factor authentication but no shared secret is given")
 	}
 
 	tan, err := totp.GenerateCode(d.config.SharedSecret, time.Now())

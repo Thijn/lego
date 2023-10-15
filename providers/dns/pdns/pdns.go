@@ -121,7 +121,7 @@ func (d *DNSProvider) CreateRecord(fqdn, value string) error {
 
 	authZone, err := dns01.FindZoneByFqdn(fqdn)
 	if err != nil {
-		return fmt.Errorf("pdns: could not find zone for domain %q (%s): %w", domain, fqdn, err)
+		return fmt.Errorf("pdns: could not find zone for domain %q (%s): %w", fqdn, fqdn, err)
 	}
 
 	ctx := context.Background()

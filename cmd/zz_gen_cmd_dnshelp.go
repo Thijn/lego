@@ -35,6 +35,7 @@ func allDNSCodes() string {
 		"cloudxns",
 		"conoha",
 		"constellix",
+		"cpanel",
 		"derak",
 		"desec",
 		"designate",
@@ -87,6 +88,7 @@ func allDNSCodes() string {
 		"liquidweb",
 		"loopia",
 		"luadns",
+		"mailinabox",
 		"metaname",
 		"mydnsjp",
 		"mythicbeasts",
@@ -132,6 +134,7 @@ func allDNSCodes() string {
 		"vkcloud",
 		"vscale",
 		"vultr",
+		"webnames",
 		"websupport",
 		"wedos",
 		"yandex",
@@ -609,6 +612,30 @@ func displayDNSHelp(w io.Writer, name string) error {
 
 		ew.writeln()
 		ew.writeln(`More information: https://go-acme.github.io/lego/dns/constellix`)
+
+	case "cpanel":
+		// generated from: providers/dns/cpanel/cpanel.toml
+		ew.writeln(`Configuration for CPanel/WHM.`)
+		ew.writeln(`Code:	'cpanel'`)
+		ew.writeln(`Since:	'v4.16.0'`)
+		ew.writeln()
+
+		ew.writeln(`Credentials:`)
+		ew.writeln(`	- "CPANEL_BASE_URL":	API server URL`)
+		ew.writeln(`	- "CPANEL_TOKEN":	API token`)
+		ew.writeln(`	- "CPANEL_USERNAME":	username`)
+		ew.writeln()
+
+		ew.writeln(`Additional Configuration:`)
+		ew.writeln(`	- "CPANEL_HTTP_TIMEOUT":	API request timeout`)
+		ew.writeln(`	- "CPANEL_MODE":	use cpanel API or WHM API (Default: cpanel)`)
+		ew.writeln(`	- "CPANEL_POLLING_INTERVAL":	Time between DNS propagation check`)
+		ew.writeln(`	- "CPANEL_PROPAGATION_TIMEOUT":	Maximum waiting time for DNS propagation`)
+		ew.writeln(`	- "CPANEL_REGION":	The region`)
+		ew.writeln(`	- "CPANEL_TTL":	The TTL of the TXT record used for the DNS challenge`)
+
+		ew.writeln()
+		ew.writeln(`More information: https://go-acme.github.io/lego/dns/cpanel`)
 
 	case "derak":
 		// generated from: providers/dns/derak/derak.toml
@@ -1107,6 +1134,7 @@ func displayDNSHelp(w io.Writer, name string) error {
 		ew.writeln(`	- "GCE_POLLING_INTERVAL":	Time between DNS propagation check`)
 		ew.writeln(`	- "GCE_PROPAGATION_TIMEOUT":	Maximum waiting time for DNS propagation`)
 		ew.writeln(`	- "GCE_TTL":	The TTL of the TXT record used for the DNS challenge`)
+		ew.writeln(`	- "GCE_ZONE_ID":	Allows to skip the automatic detection of the zone`)
 
 		ew.writeln()
 		ew.writeln(`More information: https://go-acme.github.io/lego/dns/gcloud`)
@@ -1694,6 +1722,26 @@ func displayDNSHelp(w io.Writer, name string) error {
 		ew.writeln()
 		ew.writeln(`More information: https://go-acme.github.io/lego/dns/luadns`)
 
+	case "mailinabox":
+		// generated from: providers/dns/mailinabox/mailinabox.toml
+		ew.writeln(`Configuration for Mail-in-a-Box.`)
+		ew.writeln(`Code:	'mailinabox'`)
+		ew.writeln(`Since:	'v4.16.0'`)
+		ew.writeln()
+
+		ew.writeln(`Credentials:`)
+		ew.writeln(`	- "MAILINABOX_BASE_URL":	Base API URL (ex: https://box.example.com)`)
+		ew.writeln(`	- "MAILINABOX_EMAIL":	User email`)
+		ew.writeln(`	- "MAILINABOX_PASSWORD":	User password`)
+		ew.writeln()
+
+		ew.writeln(`Additional Configuration:`)
+		ew.writeln(`	- "MAILINABOX_POLLING_INTERVAL":	Time between DNS propagation check`)
+		ew.writeln(`	- "MAILINABOX_PROPAGATION_TIMEOUT":	Maximum waiting time for DNS propagation`)
+
+		ew.writeln()
+		ew.writeln(`More information: https://go-acme.github.io/lego/dns/mailinabox`)
+
 	case "metaname":
 		// generated from: providers/dns/metaname/metaname.toml
 		ew.writeln(`Configuration for Metaname.`)
@@ -2076,6 +2124,7 @@ func displayDNSHelp(w io.Writer, name string) error {
 		ew.writeln()
 
 		ew.writeln(`Additional Configuration:`)
+		ew.writeln(`	- "PDNS_API_VERSION":	Skip API version autodetection and use the provided version number.`)
 		ew.writeln(`	- "PDNS_HTTP_TIMEOUT":	API request timeout`)
 		ew.writeln(`	- "PDNS_POLLING_INTERVAL":	Time between DNS propagation check`)
 		ew.writeln(`	- "PDNS_PROPAGATION_TIMEOUT":	Maximum waiting time for DNS propagation`)
@@ -2666,6 +2715,26 @@ func displayDNSHelp(w io.Writer, name string) error {
 
 		ew.writeln()
 		ew.writeln(`More information: https://go-acme.github.io/lego/dns/vultr`)
+
+	case "webnames":
+		// generated from: providers/dns/webnames/webnames.toml
+		ew.writeln(`Configuration for Webnames.`)
+		ew.writeln(`Code:	'webnames'`)
+		ew.writeln(`Since:	'v4.15.0'`)
+		ew.writeln()
+
+		ew.writeln(`Credentials:`)
+		ew.writeln(`	- "WEBNAMES_API_KEY":	Domain API key`)
+		ew.writeln()
+
+		ew.writeln(`Additional Configuration:`)
+		ew.writeln(`	- "WEBNAMES_HTTP_TIMEOUT":	API request timeout`)
+		ew.writeln(`	- "WEBNAMES_POLLING_INTERVAL":	Time between DNS propagation check`)
+		ew.writeln(`	- "WEBNAMES_PROPAGATION_TIMEOUT":	Maximum waiting time for DNS propagation`)
+		ew.writeln(`	- "WEBNAMES_TTL":	The TTL of the TXT record used for the DNS challenge`)
+
+		ew.writeln()
+		ew.writeln(`More information: https://go-acme.github.io/lego/dns/webnames`)
 
 	case "websupport":
 		// generated from: providers/dns/websupport/websupport.toml

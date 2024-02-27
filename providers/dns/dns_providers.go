@@ -26,6 +26,7 @@ import (
 	"github.com/go-acme/lego/v4/providers/dns/cloudxns"
 	"github.com/go-acme/lego/v4/providers/dns/conoha"
 	"github.com/go-acme/lego/v4/providers/dns/constellix"
+	"github.com/go-acme/lego/v4/providers/dns/cpanel"
 	"github.com/go-acme/lego/v4/providers/dns/derak"
 	"github.com/go-acme/lego/v4/providers/dns/desec"
 	"github.com/go-acme/lego/v4/providers/dns/designate"
@@ -77,6 +78,7 @@ import (
 	"github.com/go-acme/lego/v4/providers/dns/liquidweb"
 	"github.com/go-acme/lego/v4/providers/dns/loopia"
 	"github.com/go-acme/lego/v4/providers/dns/luadns"
+	"github.com/go-acme/lego/v4/providers/dns/mailinabox"
 	"github.com/go-acme/lego/v4/providers/dns/metaname"
 	"github.com/go-acme/lego/v4/providers/dns/mydnsjp"
 	"github.com/go-acme/lego/v4/providers/dns/mythicbeasts"
@@ -122,6 +124,7 @@ import (
 	"github.com/go-acme/lego/v4/providers/dns/vkcloud"
 	"github.com/go-acme/lego/v4/providers/dns/vscale"
 	"github.com/go-acme/lego/v4/providers/dns/vultr"
+	"github.com/go-acme/lego/v4/providers/dns/webnames"
 	"github.com/go-acme/lego/v4/providers/dns/websupport"
 	"github.com/go-acme/lego/v4/providers/dns/wedos"
 	"github.com/go-acme/lego/v4/providers/dns/yandex"
@@ -176,6 +179,8 @@ func NewDNSChallengeProviderByName(name string) (challenge.Provider, error) {
 		return conoha.NewDNSProvider()
 	case "constellix":
 		return constellix.NewDNSProvider()
+	case "cpanel":
+		return cpanel.NewDNSProvider()
 	case "derak":
 		return derak.NewDNSProvider()
 	case "desec":
@@ -274,10 +279,12 @@ func NewDNSChallengeProviderByName(name string) (challenge.Provider, error) {
 		return linode.NewDNSProvider()
 	case "liquidweb":
 		return liquidweb.NewDNSProvider()
-	case "luadns":
-		return luadns.NewDNSProvider()
 	case "loopia":
 		return loopia.NewDNSProvider()
+	case "luadns":
+		return luadns.NewDNSProvider()
+	case "mailinabox":
+		return mailinabox.NewDNSProvider()
 	case "manual":
 		return dns01.NewDNSProviderManual()
 	case "metaname":
@@ -370,6 +377,8 @@ func NewDNSChallengeProviderByName(name string) (challenge.Provider, error) {
 		return vscale.NewDNSProvider()
 	case "vultr":
 		return vultr.NewDNSProvider()
+	case "webnames":
+		return webnames.NewDNSProvider()
 	case "websupport":
 		return websupport.NewDNSProvider()
 	case "wedos":

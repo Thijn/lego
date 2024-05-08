@@ -30,6 +30,12 @@ docker run goacme/lego -h
   yay -S lego-bin
   ```
 
+- [Snap](https://snapcraft.io/lego) (official):
+
+  ```bash
+  sudo snap install lego
+  ```
+
 - [FreeBSD (Ports)](https://www.freshports.org/security/lego) (unofficial):
 
   ```bash
@@ -60,7 +66,7 @@ docker run goacme/lego -h
 
 Requirements:
 
-- go1.17+
+- go1.22+.
 - environment variable: `GO111MODULE=on`
 
 To install the latest version from sources, just run:

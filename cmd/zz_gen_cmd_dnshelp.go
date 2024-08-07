@@ -40,6 +40,7 @@ func allDNSCodes() string {
 		"desec",
 		"designate",
 		"digitalocean",
+		"directadmin",
 		"dnshomede",
 		"dnsimple",
 		"dnsmadeeasy",
@@ -372,6 +373,7 @@ func displayDNSHelp(w io.Writer, name string) error {
 		ew.writeln(`	- "BLUECAT_HTTP_TIMEOUT":	API request timeout`)
 		ew.writeln(`	- "BLUECAT_POLLING_INTERVAL":	Time between DNS propagation check`)
 		ew.writeln(`	- "BLUECAT_PROPAGATION_TIMEOUT":	Maximum waiting time for DNS propagation`)
+		ew.writeln(`	- "BLUECAT_SKIP_DEPLOY":	Skip deployements`)
 		ew.writeln(`	- "BLUECAT_TTL":	The TTL of the TXT record used for the DNS challenge`)
 
 		ew.writeln()
@@ -704,6 +706,7 @@ func displayDNSHelp(w io.Writer, name string) error {
 		ew.writeln(`	- "DESIGNATE_POLLING_INTERVAL":	Time between DNS propagation check`)
 		ew.writeln(`	- "DESIGNATE_PROPAGATION_TIMEOUT":	Maximum waiting time for DNS propagation`)
 		ew.writeln(`	- "DESIGNATE_TTL":	The TTL of the TXT record used for the DNS challenge`)
+		ew.writeln(`	- "DESIGNATE_ZONE_NAME":	The zone name to use in the OpenStack Project to manage TXT records.`)
 		ew.writeln(`	- "OS_PROJECT_ID":	Project ID`)
 		ew.writeln(`	- "OS_TENANT_NAME":	Tenant name (deprecated see OS_PROJECT_NAME and OS_PROJECT_ID)`)
 
@@ -730,6 +733,29 @@ func displayDNSHelp(w io.Writer, name string) error {
 
 		ew.writeln()
 		ew.writeln(`More information: https://go-acme.github.io/lego/dns/digitalocean`)
+
+	case "directadmin":
+		// generated from: providers/dns/directadmin/directadmin.toml
+		ew.writeln(`Configuration for DirectAdmin.`)
+		ew.writeln(`Code:	'directadmin'`)
+		ew.writeln(`Since:	'v4.18.0'`)
+		ew.writeln()
+
+		ew.writeln(`Credentials:`)
+		ew.writeln(`	- "DIRECTADMIN_API_URL":	URL of the API`)
+		ew.writeln(`	- "DIRECTADMIN_PASSWORD":	API password`)
+		ew.writeln(`	- "DIRECTADMIN_USERNAME":	API username`)
+		ew.writeln()
+
+		ew.writeln(`Additional Configuration:`)
+		ew.writeln(`	- "DIRECTADMIN_HTTP_TIMEOUT":	API request timeout`)
+		ew.writeln(`	- "DIRECTADMIN_POLLING_INTERVAL":	Time between DNS propagation check`)
+		ew.writeln(`	- "DIRECTADMIN_PROPAGATION_TIMEOUT":	Maximum waiting time for DNS propagation`)
+		ew.writeln(`	- "DIRECTADMIN_TTL":	The TTL of the TXT record used for the DNS challenge`)
+		ew.writeln(`	- "DIRECTADMIN_ZONE_NAME":	Zone name used to add the TXT record`)
+
+		ew.writeln()
+		ew.writeln(`More information: https://go-acme.github.io/lego/dns/directadmin`)
 
 	case "dnshomede":
 		// generated from: providers/dns/dnshomede/dnshomede.toml
@@ -2306,6 +2332,7 @@ func displayDNSHelp(w io.Writer, name string) error {
 		ew.writeln(`	- "AWS_REGION":	Managed by the AWS client ('AWS_REGION_FILE' is not supported)`)
 		ew.writeln(`	- "AWS_SDK_LOAD_CONFIG":	Managed by the AWS client. Retrieve the region from the CLI config file ('AWS_SDK_LOAD_CONFIG_FILE' is not supported)`)
 		ew.writeln(`	- "AWS_SECRET_ACCESS_KEY":	Managed by the AWS client. Secret access key ('AWS_SECRET_ACCESS_KEY_FILE' is not supported, use 'AWS_SHARED_CREDENTIALS_FILE' instead)`)
+		ew.writeln(`	- "AWS_WAIT_FOR_RECORD_SETS_CHANGED":	Wait for changes to be INSYNC (it can be unstable)`)
 		ew.writeln()
 
 		ew.writeln(`Additional Configuration:`)

@@ -27,6 +27,8 @@ const (
 	EnvPropagationTimeout = envNamespace + "PROPAGATION_TIMEOUT"
 	EnvPollingInterval    = envNamespace + "POLLING_INTERVAL"
 
+	EnvZoneName = envNamespace + "ZONE_NAME"
+
 	envNamespaceClient = "OS_"
 
 	EnvAuthURL       = envNamespaceClient + "AUTH_URL"
@@ -44,6 +46,7 @@ const (
 
 // Config is used to configure the creation of the DNSProvider.
 type Config struct {
+	ZoneName           string
 	PropagationTimeout time.Duration
 	PollingInterval    time.Duration
 	TTL                int
@@ -53,6 +56,7 @@ type Config struct {
 // NewDefaultConfig returns a default configuration for the DNSProvider.
 func NewDefaultConfig() *Config {
 	return &Config{
+		ZoneName:           env.GetOrFile(EnvZoneName),
 		TTL:                env.GetOrDefaultInt(EnvTTL, 10),
 		PropagationTimeout: env.GetOrDefaultSecond(EnvPropagationTimeout, 10*time.Minute),
 		PollingInterval:    env.GetOrDefaultSecond(EnvPollingInterval, 10*time.Second),
@@ -127,12 +131,12 @@ func (d *DNSProvider) Timeout() (timeout, interval time.Duration) {
 func (d *DNSProvider) Present(domain, token, keyAuth string) error {
 	info := dns01.GetChallengeInfo(domain, keyAuth)
 
-	authZone, err := dns01.FindZoneByFqdn(info.EffectiveFQDN)
+	zone, err := d.getZoneName(info.EffectiveFQDN)
 	if err != nil {
-		return fmt.Errorf("designate: could not find zone for domain %q: %w", domain, err)
+		return fmt.Errorf("designate: %w", err)
 	}
 
-	zoneID, err := d.getZoneID(authZone)
+	zoneID, err := d.getZoneID(zone)
 	if err != nil {
 		return fmt.Errorf("designate: couldn't get zone ID in Present: %w", err)
 	}
@@ -167,12 +171,12 @@ func (d *DNSProvider) Present(domain, token, keyAuth string) error {
 func (d *DNSProvider) CleanUp(domain, token, keyAuth string) error {
 	info := dns01.GetChallengeInfo(domain, keyAuth)
 
-	authZone, err := dns01.FindZoneByFqdn(info.EffectiveFQDN)
+	zone, err := d.getZoneName(info.EffectiveFQDN)
 	if err != nil {
-		return fmt.Errorf("designate: could not find zone for domain %q: %w", domain, err)
+		return fmt.Errorf("designate: %w", err)
 	}
 
-	zoneID, err := d.getZoneID(authZone)
+	zoneID, err := d.getZoneID(zone)
 	if err != nil {
 		return fmt.Errorf("designate: couldn't get zone ID in CleanUp: %w", err)
 	}
@@ -272,4 +276,21 @@ func (d *DNSProvider) getRecord(zoneID, wanted string) (*recordsets.RecordSet, e
 	}
 
 	return nil, nil
+}
+
+func (d *DNSProvider) getZoneName(fqdn string) (string, error) {
+	if d.config.ZoneName != "" {
+		return d.config.ZoneName, nil
+	}
+
+	authZone, err := dns01.FindZoneByFqdn(fqdn)
+	if err != nil {
+		return "", fmt.Errorf("could not find zone for %s: %w", fqdn, err)
+	}
+
+	if authZone == "" {
+		return "", errors.New("empty zone name")
+	}
+
+	return authZone, nil
 }

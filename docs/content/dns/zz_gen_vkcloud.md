@@ -29,7 +29,7 @@ Here is an example bash command using the VK Cloud provider:
 VK_CLOUD_PROJECT_ID="<your_project_id>" \
 VK_CLOUD_USERNAME="<your_email>" \
 VK_CLOUD_PASSWORD="<your_password>" \
-lego --email you@example.com --dns vkcloud --domains "example.org" --domains "*.example.org" run
+lego --email you@example.com --dns vkcloud -d '*.example.com' -d example.com run
 ```
 
 
@@ -44,7 +44,7 @@ lego --email you@example.com --dns vkcloud --domains "example.org" --domains "*.
 | `VK_CLOUD_USERNAME` | Email of VK Cloud account |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -59,7 +59,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `VK_CLOUD_TTL` | The TTL of the TXT record used for the DNS challenge |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 ## Credential information
 

@@ -2,12 +2,13 @@ Name = "Joohoi's ACME-DNS"
 Description = ''''''
 URL = "https://github.com/joohoi/acme-dns"
 Code = "acme-dns"
+Aliases = ["acmedns"] # TODO(ldez): remove "-" in v5
 Since = "v1.1.0"
 
 Example = '''
 ACME_DNS_API_BASE=http://10.0.0.8:4443 \
 ACME_DNS_STORAGE_PATH=/root/.lego-acme-dns-accounts.json \
-lego --email you@example.com --dns acme-dns --domains my.example.org run
+lego --email you@example.com --dns "acme-dns" -d '*.example.com' -d example.com run
 '''
 
 [Configuration]

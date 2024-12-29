@@ -9,8 +9,10 @@ import (
 	"time"
 
 	"github.com/dnsimple/dnsimple-go/dnsimple"
+	"github.com/go-acme/lego/v4/challenge"
 	"github.com/go-acme/lego/v4/challenge/dns01"
 	"github.com/go-acme/lego/v4/platform/config/env"
+	"github.com/go-acme/lego/v4/providers/dns/internal/useragent"
 	"golang.org/x/oauth2"
 )
 
@@ -26,6 +28,8 @@ const (
 	EnvPropagationTimeout = envNamespace + "PROPAGATION_TIMEOUT"
 	EnvPollingInterval    = envNamespace + "POLLING_INTERVAL"
 )
+
+var _ challenge.ProviderTimeout = (*DNSProvider)(nil)
 
 // Config is used to configure the creation of the DNSProvider.
 type Config struct {
@@ -77,7 +81,7 @@ func NewDNSProviderConfig(config *Config) (*DNSProvider, error) {
 
 	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: config.AccessToken})
 	client := dnsimple.NewClient(oauth2.NewClient(context.Background(), ts))
-	client.SetUserAgent("go-acme/lego")
+	client.SetUserAgent(useragent.Get())
 
 	if config.BaseURL != "" {
 		client.BaseURL = config.BaseURL

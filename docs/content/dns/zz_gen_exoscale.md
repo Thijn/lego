@@ -28,7 +28,7 @@ Here is an example bash command using the Exoscale provider:
 ```bash
 EXOSCALE_API_KEY=abcdefghijklmnopqrstuvwx \
 EXOSCALE_API_SECRET=xxxxxxx \
-lego --email you@example.com --dns exoscale --domains my.example.org run
+lego --email you@example.com --dns exoscale -d '*.example.com' -d example.com run
 ```
 
 
@@ -42,14 +42,13 @@ lego --email you@example.com --dns exoscale --domains my.example.org run
 | `EXOSCALE_API_SECRET` | API secret |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
 
 | Environment Variable Name | Description |
 |--------------------------------|-------------|
-| `EXOSCALE_API_ZONE` | API zone |
 | `EXOSCALE_ENDPOINT` | API endpoint URL |
 | `EXOSCALE_HTTP_TIMEOUT` | API request timeout |
 | `EXOSCALE_POLLING_INTERVAL` | Time between DNS propagation check |
@@ -57,7 +56,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `EXOSCALE_TTL` | The TTL of the TXT record used for the DNS challenge |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 

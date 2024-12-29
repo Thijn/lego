@@ -27,7 +27,7 @@ Here is an example bash command using the Digital Ocean provider:
 
 ```bash
 DO_AUTH_TOKEN=xxxxxx \
-lego --email you@example.com --dns digitalocean --domains my.example.org run
+lego --email you@example.com --dns digitalocean -d '*.example.com' -d example.com run
 ```
 
 
@@ -40,7 +40,7 @@ lego --email you@example.com --dns digitalocean --domains my.example.org run
 | `DO_AUTH_TOKEN` | Authentication token |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -54,7 +54,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `DO_TTL` | The TTL of the TXT record used for the DNS challenge |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 

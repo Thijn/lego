@@ -26,11 +26,11 @@ Configuration for [Selectel v2](https://selectel.ru).
 Here is an example bash command using the Selectel v2 provider:
 
 ```bash
-SELECTEL_USERNAME=trex \
-SELECTEL_PASSWORD=xxxxx \
-SELECTEL_ACCOUNT_ID=1234567 \
-SELECTEL_PROJECT_ID=111a11111aaa11aa1a11aaa11111aa1a \
-lego --email you@example.com --dns selectelv2 --domains my.example.org run
+SELECTELV2_USERNAME=trex \
+SELECTELV2_PASSWORD=xxxxx \
+SELECTELV2_ACCOUNT_ID=1234567 \
+SELECTELV2_PROJECT_ID=111a11111aaa11aa1a11aaa11111aa1a \
+lego --email you@example.com --dns selectelv2 -d '*.example.com' -d example.com run
 ```
 
 
@@ -46,7 +46,7 @@ lego --email you@example.com --dns selectelv2 --domains my.example.org run
 | `SELECTELV2_USERNAME` | Openstack username |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -60,7 +60,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `SELECTELV2_TTL` | The TTL of the TXT record used for the DNS challenge |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 

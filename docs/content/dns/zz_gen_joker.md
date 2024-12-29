@@ -30,17 +30,17 @@ Here is an example bash command using the Joker provider:
 JOKER_API_MODE=SVC \
 JOKER_USERNAME=<your email> \
 JOKER_PASSWORD=<your password> \
-lego --email you@example.com --dns joker --domains my.example.org run
+lego --email you@example.com --dns joker -d '*.example.com' -d example.com run
 
 # DMAPI
 JOKER_API_MODE=DMAPI \
 JOKER_USERNAME=<your email> \
 JOKER_PASSWORD=<your password> \
-lego --email you@example.com --dns joker --domains my.example.org run
+lego --email you@example.com --dns joker -d '*.example.com' -d example.com run
 ## or
 JOKER_API_MODE=DMAPI \
 JOKER_API_KEY=<your API key> \
-lego --email you@example.com --dns joker --domains my.example.org run
+lego --email you@example.com --dns joker -d '*.example.com' -d example.com run
 ```
 
 
@@ -56,7 +56,7 @@ lego --email you@example.com --dns joker --domains my.example.org run
 | `JOKER_USERNAME` | Joker.com username |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -70,7 +70,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `JOKER_TTL` | The TTL of the TXT record used for the DNS challenge |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 ## SVC mode
 

@@ -27,7 +27,7 @@ Here is an example bash command using the Derak Cloud provider:
 
 ```bash
 DERAK_API_KEY="xxxxxxxxxxxxxxxxxxxxx" \
-lego --email myemail@example.com --dns derak --domains my.example.org run
+lego --email you@example.com --dns derak -d '*.example.com' -d example.com run
 ```
 
 
@@ -40,7 +40,7 @@ lego --email myemail@example.com --dns derak --domains my.example.org run
 | `DERAK_API_KEY` | The API key |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -54,7 +54,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `DERAK_WEBSITE_ID` | Force the zone/website ID |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 

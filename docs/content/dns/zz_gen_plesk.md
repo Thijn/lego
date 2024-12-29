@@ -29,7 +29,7 @@ Here is an example bash command using the plesk.com provider:
 PLESK_SERVER_BASE_URL="https://plesk.myserver.com:8443" \
 PLESK_USERNAME=xxxxxx \
 PLESK_PASSWORD=yyyyyy \
-lego --email you@example.com --dns plesk --domains my.example.org run
+lego --email you@example.com --dns plesk -d '*.example.com' -d example.com run
 ```
 
 
@@ -44,7 +44,7 @@ lego --email you@example.com --dns plesk --domains my.example.org run
 | `PLESK_USERNAME` | API username |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -57,7 +57,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `PLESK_TTL` | The TTL of the TXT record used for the DNS challenge |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 

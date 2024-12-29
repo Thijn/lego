@@ -39,16 +39,16 @@ checks:
 .PHONY: patch minor major detach
 
 patch:
-	go run internal/release.go release -m patch
+	go run ./internal/releaser/ release -m patch
 
 minor:
-	go run internal/release.go release -m minor
+	go run ./internal/releaser/ release -m minor
 
 major:
-	go run internal/release.go release -m major
+	go run ./internal/releaser/ release -m major
 
 detach:
-	go run internal/release.go detach
+	go run ./internal/releaser/ detach
 
 # Docs
 .PHONY: docs-build docs-serve docs-themes

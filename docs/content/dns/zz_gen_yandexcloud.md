@@ -28,7 +28,7 @@ Here is an example bash command using the Yandex Cloud provider:
 ```bash
 YANDEX_CLOUD_IAM_TOKEN=<base64_IAM_token> \
 YANDEX_CLOUD_FOLDER_ID=<folder/project_id> \
-lego --email you@example.com --dns yandexcloud --domains "example.org" --domains "*.example.org" run
+lego --email you@example.com --dns yandexcloud -d '*.example.com' -d example.com run
 
 # ---
 
@@ -41,7 +41,7 @@ YANDEX_CLOUD_IAM_TOKEN=$(echo '{ \
   "private_key": "-----BEGIN PRIVATE KEY-----<rsa private key>-----END PRIVATE KEY-----" \
 }' | base64) \
 YANDEX_CLOUD_FOLDER_ID=<yandex cloud folder(project) id> \
-lego --email you@example.com --dns yandexcloud --domains "example.org" --domains "*.example.org" run
+lego --email you@example.com --dns yandexcloud -d '*.example.com' -d example.com run
 ```
 
 
@@ -55,7 +55,7 @@ lego --email you@example.com --dns yandexcloud --domains "example.org" --domains
 | `YANDEX_CLOUD_IAM_TOKEN` | The base64 encoded json which contains information about iam token of service account with `dns.admin` permissions |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -67,7 +67,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `YANDEX_CLOUD_TTL` | The TTL of the TXT record used for the DNS challenge |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 ## IAM Token
 

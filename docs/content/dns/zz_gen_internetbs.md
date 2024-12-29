@@ -28,7 +28,7 @@ Here is an example bash command using the Internet.bs provider:
 ```bash
 INTERNET_BS_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxx \
 INTERNET_BS_PASSWORD=yyyyyyyyyyyyyyyyyyyyyyyyyy \
-lego --email you@example.com --dns internetbs --domains my.example.org run
+lego --email you@example.com --dns internetbs -d '*.example.com' -d example.com run
 ```
 
 
@@ -42,7 +42,7 @@ lego --email you@example.com --dns internetbs --domains my.example.org run
 | `INTERNET_BS_PASSWORD` | API password |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -55,7 +55,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `INTERNET_BS_TTL` | The TTL of the TXT record used for the DNS challenge |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 

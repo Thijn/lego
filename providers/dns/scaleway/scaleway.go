@@ -9,20 +9,13 @@ import (
 	"strings"
 	"time"
 
+	"github.com/go-acme/lego/v4/challenge"
 	"github.com/go-acme/lego/v4/challenge/dns01"
 	"github.com/go-acme/lego/v4/platform/config/env"
+	"github.com/go-acme/lego/v4/providers/dns/internal/useragent"
 	scwdomain "github.com/scaleway/scaleway-sdk-go/api/domain/v2beta1"
 	"github.com/scaleway/scaleway-sdk-go/scw"
 )
-
-const (
-	minTTL                    = 60
-	defaultPollingInterval    = 10 * time.Second
-	defaultPropagationTimeout = 120 * time.Second
-)
-
-// The access key is not used by the Scaleway client.
-const dumpAccessKey = "SCWXXXXXXXXXXXXXXXXX"
 
 // Environment variables names.
 const (
@@ -40,6 +33,17 @@ const (
 	EnvPropagationTimeout = envNamespace + "PROPAGATION_TIMEOUT"
 	EnvPollingInterval    = envNamespace + "POLLING_INTERVAL"
 )
+
+const (
+	minTTL                    = 60
+	defaultPollingInterval    = 10 * time.Second
+	defaultPropagationTimeout = 120 * time.Second
+)
+
+// The access key is not used by the Scaleway client.
+const dumpAccessKey = "SCWXXXXXXXXXXXXXXXXX"
+
+var _ challenge.ProviderTimeout = (*DNSProvider)(nil)
 
 // Config is used to configure the creation of the DNSProvider.
 type Config struct {
@@ -100,7 +104,7 @@ func NewDNSProviderConfig(config *Config) (*DNSProvider, error) {
 
 	configuration := []scw.ClientOption{
 		scw.WithAuth(config.AccessKey, config.Token),
-		scw.WithUserAgent("Scaleway Lego's provider"),
+		scw.WithUserAgent(useragent.Get()),
 	}
 
 	if config.ProjectID != "" {

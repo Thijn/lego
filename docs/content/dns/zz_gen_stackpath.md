@@ -29,7 +29,7 @@ Here is an example bash command using the Stackpath provider:
 STACKPATH_CLIENT_ID=xxxxx \
 STACKPATH_CLIENT_SECRET=yyyyy \
 STACKPATH_STACK_ID=zzzzz \
-lego --email you@example.com --dns stackpath --domains my.example.org run
+lego --email you@example.com --dns stackpath -d '*.example.com' -d example.com run
 ```
 
 
@@ -44,7 +44,7 @@ lego --email you@example.com --dns stackpath --domains my.example.org run
 | `STACKPATH_STACK_ID` | Stack ID |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -56,7 +56,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `STACKPATH_TTL` | The TTL of the TXT record used for the DNS challenge |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 

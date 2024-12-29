@@ -1,12 +1,138 @@
 # Changelog
 
-## [v4.17.4] - 2024-06-12
+## [v4.21.0](https://github.com/go-acme/lego/releases/tag/v4.21.0) (2024-12-20)
+
+### Added
+
+- **[dnsprovider]** Add DNS provider for Rainyun/雨云
+- **[dnsprovider]** Add DNS provider for West.cn/西部数码
+- **[dnsprovider]** Add DNS provider for ManageEngine CloudDNS
+- **[cli]** feat: add --force-cert-domains flag to renew
+
+### Fixed
+
+- **[cli]** create client only when needed
+- **[cli]** clone the transport with tls-skip-verify
+- **[cli]** use retryable client for ACME server calls
+- **[dnsprovider]** bunny: fix zone detection
+- **[dnsprovider]** inwx: delete only the TXT record related to the DNS challenge
+- **[dnsprovider]** infomaniak: increase default propagation timeout
+- **[dnsprovider]** dnsmadeeasy: use default transport
+- **[dnsprovider]** netcup: increase default propagation values
+- **[dnsprovider]** otc: use default transport
+
+## [v4.20.4](https://github.com/go-acme/lego/releases/tag/v4.20.4) (2024-11-21)
+
+Publish the Snap to the Snapcraft stable channel.
+
+## [v4.20.3](https://github.com/go-acme/lego/releases/tag/v4.20.3) (2024-11-21)
+
+### Fixed
+
+- **[dnsprovider]** technitium: fix status code handling
+- **[dnsprovider]** directadmin: fix timeout configuration
+- **[httpprovider]** fix: HTTP server IPv6 matching
+
+## [v4.20.2](https://github.com/go-acme/lego/releases/tag/v4.20.2) (2024-11-11)
+
+### Added
+
+- **[dnsprovider]** Add DNS provider for Technitium
+- **[dnsprovider]** Add DNS provider for Regfish
+- **[dnsprovider]** Add DNS provider for Timeweb Cloud
+- **[dnsprovider]** Add DNS provider for Volcano Engine
+- **[dnsprovider]** Add DNS provider for Core-Networks
+- **[dnsprovider]** rfc2136: add support for tsig-keygen generated file
+- **[cli]** Add option to skip the TLS verification of the ACME server
+- Add documentation for env var only options
+
+### Changed
+
+- **[cli,ari]** Attempt to check ARI unless explicitly disabled
+- **[dnsprovider]** Improve propagation check error messages
+- **[dnsprovider]** cloudxns: provider deprecation
+- **[dnsprovider]** brandit: provider deprecation
+
+### Fixed
+
+- **[dnsprovider]** regru: update authentication method
+- **[dnsprovider]** selectelv2: fix non-ASCII domain
+- **[dnsprovider]** limacity: fix error message
+- **[dnsprovider]** volcengine: set API information within the default configuration
+- **[log]** Parse printf verbs in log line output
+
+## v4.20.1 (2024-11-11)
+
+Cancelled due to CI failure.
+
+## v4.20.0 (2024-11-11)
+
+Cancelled due to CI failure.
+
+## [v4.19.2](https://github.com/go-acme/lego/releases/tag/v4.19.2) (2024-10-06)
+
+### Fixed
+
+- **[lib]** go1.22 compatibility
+
+## [v4.19.1](https://github.com/go-acme/lego/releases/tag/v4.19.1) (2024-10-06)
+
+### Fixed
+
+- **[dnsprovider]** selectelv2: use baseURL from configuration
+- **[dnsprovider]** epik: add User-Agent
+
+## [v4.19.0](https://github.com/go-acme/lego/releases/tag/v4.19.0) (2024-10-03)
+
+### Added
+
+- **[dnsprovider]** Add DNS provider for HuaweiCloud
+- **[dnsprovider]** Add DNS provider for SelfHost.(de|eu)
+- **[lib,cli,dnsprovider]** Add `dns.propagation-rns` option
+- **[cli,dnsprovider]** Add `dns.propagation-wait` flag
+- **[lib,dnsprovider]** Add `PropagationWait` function
+
+### Changed
+
+- **[dnsprovider]** ionos: follow CNAME
+- **[lib,dnsprovider]** Reducing the lock strength of the soa cache entry
+- **[lib,cli,dnsprovider]** Deprecation of `dns.disable-cp`, replaced by `dns.propagation-disable-ans`.
+
+### Fixed
+
+- **[dnsprovider]** Use UTC instead of GMT when possible
+- **[dnsprovider]** namesilo: restrict CleanUp
+- **[dnsprovider]** godaddy: fix cleanup
+
+## [v4.18.0](https://github.com/go-acme/lego/releases/tag/v4.18.0) (2024-08-30)
+
+### Added
+
+- **[dnsprovider]** Add DNS provider for mijn.host
+- **[dnsprovider]** Add DNS provider for Lima-City
+- **[dnsprovider]** Add DNS provider for DirectAdmin
+- **[dnsprovider]** Add DNS provider for Mittwald
+- **[lib,cli]** feat: add option to handle the overall request limit
+- **[lib]** feat: expose certificates pool creation
+
+### Changed
+
+- **[cli]** feat: add LEGO_ISSUER_CERT_PATH to run hook
+- **[dnsprovider]** bluecat: skip deploy
+- **[dnsprovider]** ovh: allow to use ovh.conf file
+- **[dnsprovider]** designate: allow manually overwriting DNS zone
+
+### Fixed
+
+- **[ari]** fix: avoid Int63n panic in ShouldRenewAt()
+
+## [v4.17.4](https://github.com/go-acme/lego/releases/tag/v4.17.4) (2024-06-12)
 
 ### Fixed
 
 - **[dnsprovider]** Update dependencies
 
-## [v4.17.3] - 2024-05-28
+## [v4.17.3](https://github.com/go-acme/lego/releases/tag/v4.17.3) (2024-05-28)
 
 ### Added
 
@@ -34,13 +160,13 @@
 - **[dnsprovider]** pdns: reconstruct zone URLs to enable non-root folder API endpoints
 - **[dnsprovider]** alidns: fix link to API documentation
 
-## [v4.17.2] - 2024-05-28
+## v4.17.2 (2024-05-28)
 
 Canceled due to a release failure related to Snapcraft.
 
 The Snapcraft release are disabled for now.
 
-## [v4.17.1] - 2024-05-28
+## v4.17.1 (2024-05-28)
 
 Canceled due to a release failure related to oci-go-sdk.
 
@@ -49,17 +175,17 @@ The module `github.com/oracle/oci-go-sdk/v65` uses `github.com/gofrs/flock` but 
 
 Due to that we will remove the Solaris build.
 
-## [v4.17.0] - 2024-05-28
+## v4.17.0 (2024-05-28)
 
 Canceled due to a release failure related to Snapcraft.
 
-## [v4.16.1] - 2024-03-10
+## [v4.16.1](https://github.com/go-acme/lego/releases/tag/v4.16.1) (2024-03-10)
 
 ### Fixed
 
 - **[cli,ari]** fix: don't generate ARI cert ID if ARI is not enable
 
-## [v4.16.0] - 2024-03-09
+## [v4.16.0](https://github.com/go-acme/lego/releases/tag/v4.16.0) (2024-03-09)
 
 ### Added
 
@@ -80,7 +206,7 @@ Canceled due to a release failure related to Snapcraft.
 - **[dnsprovider]** easydns: fix zone detection
 - **[dnsprovider]** ns1: fix record creation
 
-## [v4.15.0] - 2024-01-28
+## [v4.15.0](https://github.com/go-acme/lego/releases/tag/v4.15.0) (2024-01-28)
 
 ### Added
 
@@ -118,7 +244,7 @@ Canceled due to a release failure related to Snapcraft.
 - **[dnsprovider]** nifcloud: fix API requests
 - **[dnsprovider]** otc: sequential challenge
 
-## [v4.14.1] - 2023-09-20
+## [v4.14.1](https://github.com/go-acme/lego/releases/tag/v4.14.1) (2023-09-20)
 
 ### Fixed
 
@@ -126,11 +252,11 @@ Canceled due to a release failure related to Snapcraft.
 - **[dnsprovider]** bunny: use NRDCG fork
 - **[dnsprovider]** ovh: update client to v1.4.2
 
-## [v4.14.1] - 2023-09-19
+## v4.14.1 (2023-09-19)
 
 Cancelled due to CI failure.
 
-## [v4.14.0] - 2023-08-20
+## [v4.14.0](https://github.com/go-acme/lego/releases/tag/v4.14.0) (2023-08-20)
 
 ### Added
 
@@ -149,20 +275,20 @@ Cancelled due to CI failure.
 - **[dnsprovider]** pdns: fix notify
 - **[dnsprovider]** route53: avoid unexpected records deletion
 
-## [v4.13.3] - 2023-07-25
+## [v4.13.3](https://github.com/go-acme/lego/releases/tag/v4.13.3) (2023-07-25)
 
 ### Fixed
 
 - **[dnsprovider]** azuredns: fix configuration from env vars
 - **[dnsprovider]** gcore: change API domain
 
-## [v4.13.2] - 2023-07-21
+## [v4.13.2](https://github.com/go-acme/lego/releases/tag/v4.13.2) (2023-07-21)
 
 ### Fixed
 
 - **[dnsprovider]** servercow: fix regression
 
-## [v4.13.1] - 2023-07-20
+## [v4.13.1](https://github.com/go-acme/lego/releases/tag/v4.13.1) (2023-07-20)
 
 ### Added
 
@@ -183,24 +309,24 @@ Cancelled due to CI failure.
 - **[cli]** fix: list command
 - **[lib]** fix: ARI explanationURL
 
-## [v4.13.0] - 2023-07-20
+## v4.13.0 (2023-07-20)
 
 Cancelled due to a CI issue (no space left on device).
 
-## [v4.12.2] - 2023-06-19
+## [v4.12.2](https://github.com/go-acme/lego/releases/tag/v4.12.2) (2023-06-19)
 
 ### Fixed
 
 - **[dnsprovider]** dnsmadeeasy: fix DeleteRecord
 - **[lib]** fix: read status code from response
 
-## [v4.12.1] - 2023-06-06
+## [v4.12.1](https://github.com/go-acme/lego/releases/tag/v4.12.1) (2023-06-06)
 
 ### Fixed
 
 - **[dnsprovider]** pdns: fix record value
 
-## [v4.12.0] - 2023-05-28
+## [v4.12.0](https://github.com/go-acme/lego/releases/tag/v4.12.0) (2023-05-28)
 
 ### Added
 
@@ -218,7 +344,7 @@ Cancelled due to a CI issue (no space left on device).
 - **[dnsprovider]** autodns: fixes wrong zone in api call if CNAME is used
 - **[cli]** fix: archive only domain-related files on revoke
 
-## [v4.11.0] - 2023-05-02
+## [v4.11.0](https://github.com/go-acme/lego/releases/tag/v4.11.0) (2023-05-02)
 
 ### Added
 
@@ -240,18 +366,18 @@ Cancelled due to a CI issue (no space left on device).
 
 - **[dnsprovider]** rimuhosting: fix API base URL
 
-## [v4.10.2] - 2023-02-26
+## [v4.10.2](https://github.com/go-acme/lego/releases/tag/v4.10.2) (2023-02-26)
 
 Fix Docker image builds.
 
-## [v4.10.1] - 2023-02-25
+## [v4.10.1](https://github.com/go-acme/lego/releases/tag/v4.10.1) (2023-02-25)
 
 ### Fixed
 
 - **[dnsprovider,cname]** acmedns: fix CNAME support
 - **[dnsprovider]** dynu: fix subdomain support
 
-## [v4.10.0] - 2023-02-10
+## [v4.10.0](https://github.com/go-acme/lego/releases/tag/v4.10.0) (2023-02-10)
 
 ### Added
 
@@ -277,22 +403,22 @@ Fix Docker image builds.
 - **[dnsprovider]** pdns: fix usage of notify only when zone kind is Master or Slave
 - **[dnsprovider]** return an error when extracting record name
 
-## [v4.9.1] - 2022-11-25
+## [v4.9.1](https://github.com/go-acme/lego/releases/tag/v4.9.1) (2022-11-25)
 
 ### Changed
-- 
+
 - **[lib,cname]** cname: add log about CNAME entries
 - **[dnsprovider]** regru: improve error handling
 
 ### Fixed
-- 
+
 - **[dnsprovider,cname]** fix CNAME support for multiple DNS providers
 - **[dnsprovider,cname]** duckdns: fix CNAME support
 - **[dnsprovider,cname]** oraclecloud: use fqdn to resolve zone
 - **[dnsprovider]** hurricane: fix CNAME support
 - **[lib,cname]** cname: stop trying to traverse cname if none have been found
 
-## [v4.9.0] - 2022-10-03
+## [v4.9.0](https://github.com/go-acme/lego/releases/tag/v4.9.0) (2022-10-03)
 
 ### Added
 
@@ -322,7 +448,7 @@ Fix Docker image builds.
 - **[dnsprovider]** njalla: fix record id unmarshal error
 - **[dnsprovider]** tencentcloud: fix subdomain error
 
-## [v4.8.0] - 2022-06-30
+## [v4.8.0](https://github.com/go-acme/lego/releases/tag/v4.8.0) (2022-06-30)
 
 ### Added
 
@@ -338,9 +464,9 @@ Fix Docker image builds.
 - **[dnsprovider]** hetzner: set min TTL to 60s
 - **[docs]** refactoring and cleanup
 
-## [v4.7.0] - 2022-05-27
+## [v4.7.0](https://github.com/go-acme/lego/releases/tag/v4.7.0) (2022-05-27)
 
-### Added:
+### Added
 
 - **[dnsprovider]** Add DNS provider for iwantmyname
 - **[dnsprovider]** Add DNS Provider for IIJ DNS Platform Service
@@ -349,18 +475,18 @@ Fix Docker image builds.
 - **[dnsprovider]** dnsimple: add debug option
 - **[cli]** feat: add `LEGO_CERT_PEM_PATH` and `LEGO_CERT_PFX_PATH`
 
-### Changed:
+### Changed
 
 - **[dnsprovider]** gcore: change dns api url
 - **[dnsprovider]** bluecat: rewrite provider implementation
 
-### Fixed:
+### Fixed
 
 - **[dnsprovider]** rfc2136: fix TSIG secret
 - **[dnsprovider]** tencentcloud: fix InvalidParameter.DomainInvalid error when using DNS challenges
 - **[lib]** fix: panic in certcrypto.ParsePEMPrivateKey
 
-## [v4.6.0] - 2022-01-18
+## [v4.6.0](https://github.com/go-acme/lego/releases/tag/v4.6.0) (2022-01-18)
 
 ### Added
 
@@ -382,15 +508,15 @@ Fix Docker image builds.
 - **[dnsprovider]** mythicbeasts: fix token expiration
 - **[dnsprovider]** rackspace: change zone ID to string
 
-## [v4.5.3] - 2021-09-06
+## [v4.5.3](https://github.com/go-acme/lego/releases/tag/v4.5.3) (2021-09-06)
 
-### Fixed:
+### Fixed
 
 - **[lib,cli]** fix: missing preferred chain param for renew request
 
-## [v4.5.2] - 2021-09-01
+## [v4.5.2](https://github.com/go-acme/lego/releases/tag/v4.5.2) (2021-09-01)
 
-### Added:
+### Added
 
 - **[dnsprovider]** Add DNS provider for all-inkl
 - **[dnsprovider]** Add DNS provider for Epik
@@ -401,7 +527,7 @@ Fix Docker image builds.
 - **[dnsprovider]** Add DNS provider for Internet.bs
 - **[dnsprovider]** Add DNS provider for nicmanager
 
-### Changed:
+### Changed
 
 - **[dnsprovider]** alidns: support ECS instance RAM role
 - **[dnsprovider]** alidns: support sts token credential
@@ -409,7 +535,7 @@ Fix Docker image builds.
 - **[dnsprovider]** ovh: follow cname
 - **[lib,cli]** Add AlwaysDeactivateAuthorizations flag to ObtainRequest
 
-### Fixed:
+### Fixed
 
 - **[dnsprovider]** infomaniak: fix subzone support
 - **[dnsprovider]** edgedns: fix Present and CleanUp logic
@@ -418,17 +544,17 @@ Fix Docker image builds.
 - **[lib]** lib: use permanent error instead of context cancellation
 - **[dnsprovider]** desec: bump to v0.6.0
 
-## [v4.5.1] - 2021-09-01
+## v4.5.1 (2021-09-01)
 
 Cancelled due to a CI issue, replaced by v4.5.2.
 
-## [v4.5.0] - 2021-09-30
+## v4.5.0 (2021-09-30)
 
 Cancelled due to a CI issue, replaced by v4.5.2.
 
-## [v4.4.0] - 2021-06-08
+## [v4.4.0](https://github.com/go-acme/lego/releases/tag/v4.4.0) (2021-06-08)
 
-### Added:
+### Added
 
 - **[dnsprovider]** Add DNS provider for Infoblox
 - **[dnsprovider]** Add DNS provider for Porkbun
@@ -437,7 +563,7 @@ Cancelled due to a CI issue, replaced by v4.5.2.
 - **[dnsprovider]** Add DNS provider for VinylDNS
 - **[dnsprovider]** Add DNS provider for wedos
 
-### Changed:
+### Changed
 
 - **[cli]** log: Use stderr instead of stdout.
 - **[dnsprovider]** hostingde: autodetection of the zone name.
@@ -445,7 +571,7 @@ Cancelled due to a CI issue, replaced by v4.5.2.
 - **[dnsprovider]** powerdns: several improvements
 - **[lib]** lib: improve wait.For returns.
 
-### Fixed:
+### Fixed
 
 - **[dnsprovider]** hurricane: add API rate limiter.
 - **[dnsprovider]** hurricane: only treat first word of response body as response code
@@ -454,15 +580,15 @@ Cancelled due to a CI issue, replaced by v4.5.2.
 - **[dnsprovider]** nifcloud: Get zone info from dns01.FindZoneByFqdn
 - **[cli,lib]** csr: Support the type `NEW CERTIFICATE REQUEST`
 
-## [v4.3.1] - 2021-03-12
+## [v4.3.1](https://github.com/go-acme/lego/releases/tag/v4.3.1) (2021-03-12)
 
-### Fixed:
+### Fixed
 
 - **[dnsprovider]** exoscale: fix dependency version.
 
-## [v4.3.0] - 2021-03-10
+## [v4.3.0](https://github.com/go-acme/lego/releases/tag/v4.3.0) (2021-03-10)
 
-### Added:
+### Added
 
 - **[dnsprovider]** Add DNS provider for Njalla
 - **[dnsprovider]** Add DNS provider for Domeneshop
@@ -470,13 +596,13 @@ Cancelled due to a CI issue, replaced by v4.5.2.
 - **[dnsprovider]** designate: support for Openstack Application Credentials
 - **[dnsprovider]** edgedns: support for .edgerc file
 
-### Changed:
+### Changed
 
 - **[dnsprovider]** infomaniak: Make error message more meaningful
 - **[dnsprovider]** cloudns: Improve reliability
 - **[dnsprovider]** rfc2163: Removed support for MD5 algorithm. The default algorithm is now SHA1.
 
-### Fixed:
+### Fixed
 
 - **[dnsprovider]** desec: fix error with default TTL
 - **[dnsprovider]** mythicbeasts: implement `ProviderTimeout`
@@ -484,119 +610,119 @@ Cancelled due to a CI issue, replaced by v4.5.2.
 - **[lib]** Increase HTTP client timeouts
 - **[lib]** preferred chain only match root name
 
-## [v4.2.0] - 2021-01-24
+## [v4.2.0](https://github.com/go-acme/lego/releases/tag/v4.2.0) (2021-01-24)
 
-### Added:
+### Added
 
 - **[dnsprovider]** Add DNS provider for Loopia
 - **[dnsprovider]** Add DNS provider for Ionos.
 
-### Changed:
+### Changed
 
 - **[dnsprovider]** acme-dns: update cpu/goacmedns to v0.1.1.
 - **[dnsprovider]** inwx: Increase propagation timeout to 360s to improve robustness
 - **[dnsprovider]** vultr: Update to govultr v2 API
 - **[dnsprovider]** pdns: get exact zone instead of all zones
 
-### Fixed:
+### Fixed
 
 - **[dnsprovider]** vult, dnspod: fix default HTTP timeout.
 - **[dnsprovider]** pdns: URL request creation.
 - **[lib]** errors: Fix instance not being printed
 
-## [v4.1.3] - 2020-11-25
+## [v4.1.3](https://github.com/go-acme/lego/releases/tag/v4.1.3) (2020-11-25)
 
-### Fixed:
+### Fixed
 
 - **[dnsprovider]** azure: fix error handling.
 
-## [v4.1.2] - 2020-11-21
+## [v4.1.2](https://github.com/go-acme/lego/releases/tag/v4.1.2) (2020-11-21)
 
-### Fixed:
+### Fixed
 
 - **[lib]** fix: preferred chain support.
 
-## [v4.1.1] - 2020-11-19
+## [v4.1.1](https://github.com/go-acme/lego/releases/tag/v4.1.1) (2020-11-19)
 
-### Fixed:
+### Fixed
 
 - **[dnsprovider]** otc: select correct zone if multiple returned
 - **[dnsprovider]** azure: fix target must be a non-nil pointer
 
-## [v4.1.0] - 2020-11-06
+## [v4.1.0](https://github.com/go-acme/lego/releases/tag/v4.1.0) (2020-11-06)
 
-### Added:
+### Added
 
 - **[dnsprovider]** Add DNS provider for Infomaniak
 - **[dnsprovider]** joker: add support for SVC API
 - **[dnsprovider]** gcloud: add an option to allow the use of private zones
 
-### Changed:
+### Changed
 
 - **[dnsprovider]** rfc2136: ensure TSIG algorithm is fully qualified
 - **[dnsprovider]** designate: Deprecate OS_TENANT_NAME as required field
 
-### Fixed:
+### Fixed
 
 - **[lib]** acme/api: use postAsGet instead of post for AccountService.Get
 - **[lib]** fix: use http.Header.Set method instead of Add.
 
-## [v4.0.1] - 2020-09-03
+## [v4.0.1](https://github.com/go-acme/lego/releases/tag/v4.0.1) (2020-09-03)
 
-### Fixed:
+### Fixed
 
 - **[dnsprovider]** exoscale: change dependency version.
 
-## [v4.0.0] - 2020-09-02
+## [v4.0.0](https://github.com/go-acme/lego/releases/tag/v4.0.0) (2020-09-02)
 
-### Added:
+### Added
 
 - **[cli], [lib]** Support "alternate" certificate links for selecting different signing Chains
 
-### Changed:
+### Changed
 
 - **[cli]** Replaces `ec384` by `ec256` as default key-type
 - **[lib]** Changes `ObtainForCSR` method signature
 
-### Removed:
+### Removed
 
 - **[dnsprovider]** Replaces FastDNS by EdgeDNS
 - **[dnsprovider]** Removes old Linode provider
 - **[lib]** Removes `AddPreCheck` function
 
-## [v3.9.0] - 2020-09-01
+## [v3.9.0](https://github.com/go-acme/lego/releases/tag/v3.9.0) (2020-09-01)
 
-### Added:
+### Added
 
 - **[dnsprovider]** Add Akamai Edgedns. Deprecate FastDNS
 - **[dnsprovider]** Add DNS provider for HyperOne
 
-### Changed:
+### Changed
 
 - **[dnsprovider]** designate: add support for Openstack clouds.yaml
 - **[dnsprovider]** azure: allow selecting environments
 - **[dnsprovider]** desec: applies API rate limits.
 
-### Fixed:
+### Fixed
 
 - **[dnsprovider]** namesilo: fix cleanup.
 
-## [v3.8.0] - 2020-07-02
+## [v3.8.0](https://github.com/go-acme/lego/releases/tag/v3.8.0) (2020-07-02)
 
-### Added:
+### Added
 
 - **[cli]** cli: add hook on the run command.
 - **[dnsprovider]** inwx: Two-Factor-Authentication
 - **[dnsprovider]** Add DNS provider for ArvanCloud
 
-### Changed:
+### Changed
 
 - **[dnsprovider]** vultr: bumping govultr version
 - **[dnsprovider]** desec: improve error logs.
 - **[lib]** Ensures the return of a location during account updates
 - **[dnsprovider]** route53: Document all AWS credential environment variables
 
-### Fixed:
+### Fixed
 
 - **[dnsprovider]** stackpath: fix subdomain support.
 - **[dnsprovider]** arvandcloud: fix record name.
@@ -605,9 +731,9 @@ Cancelled due to a CI issue, replaced by v4.5.2.
 - **[dnsprovider]** hetzner: fix record name.
 - **[lib]** Registrar.ResolveAccountByKey: Fix malformed request
 
-## [v3.7.0] - 2020-05-11
+## [v3.7.0](https://github.com/go-acme/lego/releases/tag/v3.7.0) (2020-05-11)
 
-### Added:
+### Added
 
 - **[dnsprovider]** Add DNS provider for Netlify.
 - **[dnsprovider]** Add DNS provider for deSEC.io
@@ -616,28 +742,28 @@ Cancelled due to a CI issue, replaced by v4.5.2.
 - **[dnsprovider]** Add DNS provider for Mythic beasts DNSv2
 - **[dnsprovider]** Add DNS provider for Yandex.
 
-### Changed:
+### Changed
 
 - **[dnsprovider]** Upgrade DNSimple client to 0.60.0
 - **[dnsprovider]** update aws sdk
 
-### Fixed:
+### Fixed
 
 - **[dnsprovider]** autodns: removes TXT records during CleanUp.
 - **[dnsprovider]** Fix exoscale HTTP timeout
 - **[cli]** fix: renew path information.
 - **[cli]** Fix account storage location warning message
 
-## [v3.6.0] - 2020-04-24
+## [v3.6.0](https://github.com/go-acme/lego/releases/tag/v3.6.0) (2020-04-24)
 
-### Added:
+### Added
 
 - **[dnsprovider]** Add DNS provider for CloudDNS.
 - **[dnsprovider]** alicloud: add support for domain with punycode
 - **[dnsprovider]** cloudns: Add subuser support
 - **[cli]** Information about renewed certificates are now passed to the renew hook
 
-### Changed:
+### Changed
 
 - **[dnsprovider]** acmedns: Update cpu/goacmedns v0.0.1 -&gt; v0.0.2
 - **[dnsprovider]** alicloud: update sdk dependency version to v1.61.112
@@ -647,14 +773,14 @@ Cancelled due to a CI issue, replaced by v4.5.2.
 - **[dnsprovider]** namedotcom: get the actual registered domain, so we can remove just that from the hostname to be created
 - **[dnsprovider]** transip: updated the client to v6
 
-### Fixed:
+### Fixed
 
 - **[dnsprovider]** ns1: fix missing domain in log 
 - **[dnsprovider]** rimuhosting: use HTTP client from config.
 
-## [v3.5.0] - 2020-03-15
+## [v3.5.0](https://github.com/go-acme/lego/releases/tag/v3.5.0) (2020-03-15)
 
-### Added:
+### Added
 
 - **[dnsprovider]** Add DNS provider for Dynu.
 - **[dnsprovider]** Add DNS provider for reg.ru
@@ -664,27 +790,27 @@ Cancelled due to a CI issue, replaced by v4.5.2.
 - **[cli]** Multi-arch Docker image.
 - **[cli]** Adds `--name` flag to list command.
 
-### Changed:
+### Changed
 
 - **[lib]** lib: Improve cleanup log messages.
 - **[lib]** Wrap errors.
 
-### Fixed:
+### Fixed
 
 - **[dnsprovider]** azure: pass AZURE_CLIENT_SECRET_FILE to autorest.Authorizer
 - **[dnsprovider]** gcloud: fixes issues when used with GKE Workload Identity
 - **[dnsprovider]** oraclecloud: fix subdomain support
 
-## [v3.4.0] - 2020-02-25
+## [v3.4.0](https://github.com/go-acme/lego/releases/tag/v3.4.0) (2020-02-25)
 
-### Added:
+### Added
 
 - **[dnsprovider]** Add DNS provider for Constellix
 - **[dnsprovider]** Add DNS provider for Servercow.
 - **[dnsprovider]** Add DNS provider for Scaleway
 - **[cli]** Add "LEGO_PATH" environment variable
 
-### Changed:
+### Changed
 
 - **[dnsprovider]** route53: allow custom client to be provided
 - **[dnsprovider]** namecheap: allow external domains
@@ -692,7 +818,7 @@ Cancelled due to a CI issue, replaced by v4.5.2.
 - **[dnsprovider]** ovh: Improve provider documentation
 - **[dnsprovider]** route53: Improve provider documentation
 
-### Fixed:
+### Fixed
 
 - **[dnsprovider]** zoneee: fix subdomains.
 - **[dnsprovider]** designate: Don't clean up managed records like SOA and NS
@@ -700,147 +826,174 @@ Cancelled due to a CI issue, replaced by v4.5.2.
 - **[lib]** crypto: Treat CommonName as optional
 - **[lib]** chore: update cenkalti/backoff to v4.
 
-## [v3.3.0] - 2020-01-08
+## [v3.3.0](https://github.com/go-acme/lego/releases/tag/v3.3.0) (2020-01-08)
 
-### Added:
+### Added
+
 - **[dnsprovider]** Add DNS provider for Checkdomain
 - **[lib]** Add support to update account
 
-### Changed:
+### Changed
+
 - **[dnsprovider]** gcloud: Auto-detection of the project ID.
 - **[lib]** Successfully parse private key PEM blocks
 
-### Fixed:
+### Fixed
+
 - **[dnsprovider]** Update dnspod, because of API breaking changes.
 
-## [v3.2.0] - 2019-11-10
+## [v3.2.0](https://github.com/go-acme/lego/releases/tag/v3.2.0) (2019-11-10)
 
-### Added:
+### Added
+
 - **[dnsprovider]** Add support for autodns
 
-### Changed:
+### Changed
+
 - **[dnsprovider]** httpreq: Allow use environment vars from a `_FILE` file
 - **[lib]** Don't deactivate valid authorizations
 - **[lib]** Expose more SOA fields found by dns01.FindZoneByFqdn
 
-### Fixed:
+### Fixed
+
 - **[dnsprovider]** use token as unique ID.
 
-## [v3.1.0] - 2019-10-07
+## [v3.1.0](https://github.com/go-acme/lego/releases/tag/v3.1.0) (2019-10-07)
 
-### Added:
+### Added
+
 - **[dnsprovider]** Add DNS provider for Liquid Web
 - **[dnsprovider]** cloudflare: add support for API tokens
 - **[cli]** feat: ease operation behind proxy servers
 
-### Changed:
+### Changed
+
 - **[dnsprovider]** cloudflare: update client
 - **[dnsprovider]** linodev4: propagation timeout configuration.
 
-### Fixed:
+### Fixed
+
 - **[dnsprovider]** ovh: fix int overflow.
 - **[dnsprovider]** bindman: fix client version.
 
-## [v3.0.2] - 2019-08-15
+## [v3.0.2](https://github.com/go-acme/lego/releases/tag/v3.0.2) (2019-08-15)
 
-### Fixed:
+### Fixed
+
 - Invalid pseudo version (related to Cloudflare client).
 
-## [v3.0.1] - 2019-08-14
+## [v3.0.1](https://github.com/go-acme/lego/releases/tag/v3.0.1) (2019-08-14)
 
 There was a problem when creating the tag v3.0.1, this tag has been invalidated.
 
-## [v3.0.0] - 2019-08-05
+## [v3.0.0](https://github.com/go-acme/lego/releases/tag/v3.0.0) (2019-08-05)
 
-### Changed:
+### Changed
+
 - migrate to go module (new import github.com/go-acme/lego/v3/)
 - update DNS clients
 
-## [v2.7.2] - 2019-07-30
+## [v2.7.2](https://github.com/go-acme/lego/releases/tag/v2.7.2) (2019-07-30)
 
-### Fixed:
+### Fixed
+
 - **[dnsprovider]** vultr: quote TXT record
 
-## [v2.7.1] - 2019-07-22
+## [v2.7.1](https://github.com/go-acme/lego/releases/tag/v2.7.1) (2019-07-22)
 
-### Fixed:
+### Fixed
+
 - **[dnsprovider]** vultr: invalid record type.
 
-## [v2.7.0] - 2019-07-17
+## [v2.7.0](https://github.com/go-acme/lego/releases/tag/v2.7.0) (2019-07-17)
 
-### Added:
+### Added
+
 - **[dnsprovider]** Add DNS provider for namesilo
 - **[dnsprovider]** Add DNS provider for versio.nl
 
-### Changed:
+### Changed
+
 - **[dnsprovider]** Update DNS providers libs.
 - **[dnsprovider]** joker: support username and password.
 - **[dnsprovider]** Vultr: Switch to official client
 
-### Fixed:
+### Fixed
+
 - **[dnsprovider]** otc: Prevent sending empty body.
 
-## [v2.6.0] - 2019-05-27
+## [v2.6.0](https://github.com/go-acme/lego/releases/tag/v2.6.0) (2019-05-27)
 
-### Added:
+### Added
+
 - **[dnsprovider]** Add support for Joker.com DMAPI
 - **[dnsprovider]** Add support for Bindman DNS provider
 - **[dnsprovider]** Add support for EasyDNS
 - **[lib]** Get an existing certificate by URL
 
-### Changed:
+### Changed
+
 - **[dnsprovider]** digitalocean: LEGO_EXPERIMENTAL_CNAME_SUPPORT support
 - **[dnsprovider]** gcloud: Use fqdn to get zone Present/CleanUp
 - **[dnsprovider]** exec: serial behavior
 - **[dnsprovider]** manual: serial behavior.
 - **[dnsprovider]** Strip newlines when reading environment variables from `_FILE` suffixed files.
 
-### Fixed:
+### Fixed
+
 - **[cli]** fix: cli disable-cp option.
 - **[dnsprovider]** gcloud: fix zone visibility.
 
-## [v2.5.0] - 2019-04-17
+## [v2.5.0](https://github.com/go-acme/lego/releases/tag/v2.5.0) (2019-04-17)
 
-### Added:
+### Added
+
 - **[cli]** Adds renew hook
 - **[dnsprovider]** Adds 'Since' to DNS providers documentation
 
-### Changed:
+### Changed
+
 - **[dnsprovider]** gcloud: use public DNS zones
 - **[dnsprovider]** route53: enhance documentation.
 
-### Fixed:
+### Fixed
+
 - **[dnsprovider]** cloudns: fix TTL and status validation
 - **[dnsprovider]** sakuracloud: supports concurrent update
 - **[dnsprovider]** Disable authz when solve fail.
 - Add tzdata to the Docker image.
 
-## [v2.4.0] - 2019-03-25
+## [v2.4.0](https://github.com/go-acme/lego/releases/tag/v2.4.0) (2019-03-25)
 
 - Migrate from xenolf/lego to go-acme/lego.
 
-### Added:
+### Added
+
 - **[dnsprovider]** Add DNS Provider for Domain Offensive (do.de)
 - **[dnsprovider]** Adds information about '_FILE' suffix.
 
-### Fixed:
+### Fixed
+
 - **[cli,dnsprovider]** Add 'manual' provider to the output of dnshelp
 - **[dnsprovider]** hostingde: Use provided ZoneName instead of domain
 - **[dnsprovider]** pdns: fix wildcard with SANs
 
-## [v2.3.0] - 2019-03-11
+## [v2.3.0](https://github.com/go-acme/lego/releases/tag/v2.3.0) (2019-03-11)
 
-### Added:
+### Added
+
 - **[dnsprovider]** Add DNS Provider for ClouDNS.net
 - **[dnsprovider]** Add DNS Provider for Oracle Cloud
 
-### Changed:
+### Changed
+
 - **[cli]** Adds log when no renewal.
 - **[dnsprovider,lib]** Add a mechanism to wrap a PreCheckFunc
 - **[dnsprovider]** oraclecloud: better way to get private key.
 - **[dnsprovider]** exoscale: update library
 
-### Fixed:
+### Fixed
+
 - **[dnsprovider]** OVH: Refresh zone after deleting challenge record
 - **[dnsprovider]** oraclecloud: ttl config and timeout 
 - **[dnsprovider]** hostingde: fix client fails if customer has no access to dns-groups
@@ -849,40 +1002,47 @@ There was a problem when creating the tag v3.0.1, this tag has been invalidated.
 - **[dnsprovider]** vscale: fix TXT records clean up
 - **[dnsprovider]** selectel: fix TXT records clean up
 
-## [v2.2.0] - 2019-02-08
+## [v2.2.0](https://github.com/go-acme/lego/releases/tag/v2.2.0) (2019-02-08)
 
-### Added:
+### Added
+
 - **[dnsprovider]** Add support for Openstack Designate as a DNS provider
 - **[dnsprovider]** gcloud: Option to specify gcloud service account json by env as string
 - **[experimental feature]** Resolve CNAME when creating dns-01 challenge. To enable: set `LEGO_EXPERIMENTAL_CNAME_SUPPORT` to `true`.
  
-### Changed:
+### Changed
+
 - **[cli]** Applies Let’s Encrypt’s recommendation about renew. The option `--days` of the command `renew` has a new default value (`30`)
 - **[lib]** Uses a jittered exponential backoff
 
-### Fixed:
+### Fixed
+
 - **[cli]** CLI and key type.
 - **[dnsprovider]** httpreq: Endpoint with path.
 - **[dnsprovider]** fastdns: Do not overwrite existing TXT records
 - Log wildcard domain correctly in validation
 
-## [v2.1.0] - 2019-01-24
+## [v2.1.0](https://github.com/go-acme/lego/releases/tag/v2.1.0) (2019-01-24)
 
-### Added:
+### Added
+
 - **[dnsprovider]** Add support for zone.ee as a DNS provider.
 
-### Changed:
+### Changed
+
 - **[dnsprovider]** nifcloud: Change DNS base url.
 - **[dnsprovider]** gcloud: More detailed information about Google Cloud DNS.
 
-### Fixed:
+### Fixed
+
 - **[lib]** fix: OCSP, set HTTP client.
 - **[dnsprovider]** alicloud: fix pagination.
 - **[dnsprovider]** namecheap: fix panic.
 
-## [v2.0.0] - 2019-01-09
+## [v2.0.0](https://github.com/go-acme/lego/releases/tag/v2.0.0) (2019-01-09)
 
-### Added:
+### Added
+
 - **[cli,lib]** Option to disable the complete propagation Requirement
 - **[lib,cli]** Support non-ascii domain name (punnycode)
 - **[cli,lib]** Add configurable timeout when obtaining certificates
@@ -899,7 +1059,8 @@ There was a problem when creating the tag v3.0.1, this tag has been invalidated.
 - **[dnsprovider]** Add DNS Provider for inwx
 - **[dnsprovider]** alidns: add support to handle more than 20 domains
 
-### Changed:
+### Changed
+
 - **[lib]** Check all challenges in a predictable order
 - **[lib]** Poll authz URL instead of challenge URL
 - **[lib]** Check all nameservers in a predictable order
@@ -914,13 +1075,15 @@ There was a problem when creating the tag v3.0.1, this tag has been invalidated.
 - **[cli]** the option `--days` of the command `renew` has default value (`15`)
 - **[dnsprovider]** gcloud: Use GCE_PROJECT for project always, if specified
 
-### Removed:
+### Removed
+
 - **[lib]** Remove `SetHTTP01Address`
 - **[lib]** Remove `SetTLSALPN01Address`
 - **[lib]** Remove `Exclude`
 - **[cli]** Remove `--exclude`, `-x` 
 
-### Fixed:
+### Fixed
+
 - **[lib]** Fixes revocation for subdomains and non-ascii domains
 - **[lib]** Disable pending authorizations
 - **[dnsprovider]** transip: concurrent access to the API.
@@ -928,17 +1091,20 @@ There was a problem when creating the tag v3.0.1, this tag has been invalidated.
 - **[dnsprovider]** Azure: Do not overwrite existing TXT records
 - **[dnsprovider]** fix: Cloudflare error.
 
-## [v1.2.0] - 2018-11-04
+## [v1.2.0](https://github.com/go-acme/lego/releases/tag/v1.2.0) (2018-11-04)
 
-### Added:
+### Added
+
 - **[dnsprovider]** Add DNS Provider for ConoHa DNS
 - **[dnsprovider]** Add DNS Provider for MyDNS.jp
 - **[dnsprovider]** Add DNS Provider for Selectel
 
-### Fixed:
+### Fixed
+
 - **[dnsprovider]** netcup: make unmarshalling of api-responses more lenient.
 
-### Changed:
+### Changed
+
 - **[dnsprovider]** aurora: change DNS client
 - **[dnsprovider]** azure: update auth to support instance metadata service
 - **[dnsprovider]** dnsmadeeasy: log response body on error
@@ -946,9 +1112,10 @@ There was a problem when creating the tag v3.0.1, this tag has been invalidated.
 - **[lib]** Do not send a JWS body when POSTing challenges.
 - **[lib]** Support POST-as-GET.
 
-## [v1.1.0] - 2018-10-16
+## [v1.1.0](https://github.com/go-acme/lego/releases/tag/v1.1.0) (2018-10-16)
 
-### Added:
+### Added
+
 - **[lib]** TLS-ALPN-01 Challenge
 - **[cli]** Add filename parameter
 - **[dnsprovider]** Allow to configure TTL, interval and timeout
@@ -966,7 +1133,8 @@ There was a problem when creating the tag v3.0.1, this tag has been invalidated.
 - **[dnsprovider]** exec: add EXEC_MODE=RAW support.
 - **[dnsprovider]** cloudflare: support for CF_API_KEY and CF_API_EMAIL
 
-### Fixed:
+### Fixed
+
 - **[lib]** Don't trust identifiers order.
 - **[lib]** Fix missing issuer certificates from Let's Encrypt
 - **[dnsprovider]** duckdns: fix TXT record update url
@@ -976,20 +1144,23 @@ There was a problem when creating the tag v3.0.1, this tag has been invalidated.
 - **[dnsprovider]** ns1: use the authoritative zone and not the domain name
 - **[dnsprovider]** ovh: check error to avoid panic due to nil client
 
-### Changed:
+### Changed
+
 - **[lib]** Submit all dns records up front, then validate serially
 
-## [v1.0.0] - 2018-05-30
+## [v1.0.0](https://github.com/go-acme/lego/releases/tag/v1.0.0) (2018-05-30)
 
-### Changed:
+### Changed
+
 - **[lib]** ACME v2 Support.
 - **[dnsprovider]** Renamed `/providers/dns/googlecloud` to `/providers/dns/gcloud`.
 - **[dnsprovider]** Modified Google Cloud provider `gcloud.NewDNSProviderServiceAccount` function to extract the project id directly from the service account file.
 - **[dnsprovider]** Made errors more verbose for the Cloudflare provider.
 
-## [v0.5.0] - 2018-05-29
+## [v0.5.0](https://github.com/go-acme/lego/releases/tag/v0.5.0) (2018-05-29)
 
-### Added:
+### Added
+
 - **[dnsprovider]** Add DNS challenge provider `exec`
 - **[dnsprovider]** Add DNS Provider for Akamai FastDNS
 - **[dnsprovider]** Add DNS Provider for Bluecat DNS
@@ -1001,7 +1172,8 @@ There was a problem when creating the tag v3.0.1, this tag has been invalidated.
 - **[dnsprovider]** Add DNS Provider for Lightsail
 - **[dnsprovider]** Add DNS Provider for Name.com
 
-### Fixed:
+### Fixed
+
 - **[dnsprovider]** Azure: Added missing environment variable in the comments
 - **[dnsprovider]** PowerDNS: Fix zone URL, add leading slash.
 - **[dnsprovider]** DNSimple: Fix api
@@ -1010,7 +1182,8 @@ There was a problem when creating the tag v3.0.1, this tag has been invalidated.
 - **[lib]** Fix zone detection for cross-zone cnames.
 - **[lib]** Use proxies from environment when making outbound http connections.
 
-### Changed:
+### Changed
+
 - **[lib]** Users of an effective top-level domain can use the DNS challenge.
 - **[dnsprovider]** Azure: Refactor to work with new Azure SDK version.
 - **[dnsprovider]** Cloudflare and Azure: Adding output of which envvars are missing.
@@ -1018,20 +1191,23 @@ There was a problem when creating the tag v3.0.1, this tag has been invalidated.
 - **[dnsprovider]** Exoscale: update to latest egoscale version.
 - **[dnsprovider]** Route53: Use NewSessionWithOptions instead of deprecated New.
 
-## [0.4.1] - 2017-09-26
+## [0.4.1](https://github.com/go-acme/lego/releases/tag/0.4.1) (2017-09-26)
 
-### Added:
+### Added
+
 - lib: A new DNS provider for OTC.
 - lib: The `AWS_HOSTED_ZONE_ID` environment variable for the Route53 DNS provider to directly specify the zone.
 - lib: The `RFC2136_TIMEOUT` environment variable to make the timeout for the RFC2136 provider configurable.
 - lib: The `GCE_SERVICE_ACCOUNT_FILE` environment variable to specify a service account file for the Google Cloud DNS provider.
 
-### Fixed:
+### Fixed
+
 - lib: Fixed an authentication issue with the latest Azure SDK.
 
-## [0.4.0] - 2017-07-13
+## [0.4.0](https://github.com/go-acme/lego/releases/tag/0.4.0) (2017-07-13)
 
-### Added:
+### Added
+
 - CLI: The `--http-timeout` switch. This allows for an override of the default client HTTP timeout.
 - lib: The `HTTPClient` field. This allows for an override of the default HTTP timeout for library HTTP requests.
 - CLI: The `--dns-timeout` switch. This allows for an override of the default DNS timeout for library DNS requests.
@@ -1057,14 +1233,17 @@ There was a problem when creating the tag v3.0.1, this tag has been invalidated.
 - lib: A new DNS provider for Exoscale DNS.
 - lib: A new DNS provider for DNSPod.
 
-### Changed:
+### Changed
+
 - lib: Exported the `PreCheckDNS` field so library users can manage the DNS check in tests.
 - lib: The library will now skip challenge solving if a valid Authz already exists.
 
-### Removed:
+### Removed
+
 - lib: The library will no longer check for auto-renewed certificates. This has been removed from the spec and is not supported in Boulder.
 
-### Fixed:
+### Fixed
+
 - lib: Fix a problem with the Route53 provider where it was possible the verification was published to a private zone.
 - lib: Loading an account from file should fail if an integral part is nil
 - lib: Fix a potential issue where the Dyn provider could resolve to an incorrect zone.
@@ -1078,20 +1257,22 @@ There was a problem when creating the tag v3.0.1, this tag has been invalidated.
 - lib: Fixed a condition where we could stall due to an early error condition.
 - lib: Fixed an issue where Authz object could end up in an active state after an error condition.
 
-## [0.3.1] - 2016-04-19
+## [0.3.1](https://github.com/go-acme/lego/releases/tag/0.3.1) (2016-04-19)
 
-### Added:
+### Added
+
 - lib: A new DNS provider for Vultr.
 
-### Fixed:
+### Fixed
+
 - lib: DNS Provider for DigitalOcean could not handle subdomains properly.
 - lib: handleHTTPError should only try to JSON decode error messages with the right content type.
 - lib: The propagation checker for the DNS challenge would not retry on send errors.
 
+## [0.3.0](https://github.com/go-acme/lego/releases/tag/0.3.0) (2016-03-19)
 
-## [0.3.0] - 2016-03-19
+### Added
 
-### Added:
 - CLI: The `--dns` switch. To include the DNS challenge for consideration. When using this switch, all other solvers are disabled. Supported are the following solvers: cloudflare, digitalocean, dnsimple, dyn, gandi, googlecloud, namecheap, route53, rfc2136 and manual.
 - CLI: The `--accept-tos`  switch. Indicates your acceptance of the Let's Encrypt terms of service without prompting you.
 - CLI: The `--webroot` switch. The HTTP-01 challenge may now be completed by dropping a file into a webroot. When using this switch, all other solvers are disabled.
@@ -1106,6 +1287,7 @@ There was a problem when creating the tag v3.0.1, this tag has been invalidated.
 - lib: The `acme.KeyType` type was added and is used for the configuration of crypto parameters for RSA and EC keys. Valid KeyTypes are: EC256, EC384, RSA2048, RSA4096 and RSA8192.
 
 ### Changed
+
 - lib: ExcludeChallenges now expects to be passed an array of `Challenge` types.
 - lib: HTTP-01 now supports custom solvers using the `ChallengeProvider` interface.
 - lib: TLS-SNI-01 now supports custom solvers using the `ChallengeProvider` interface.
@@ -1113,16 +1295,19 @@ There was a problem when creating the tag v3.0.1, this tag has been invalidated.
 - lib: The `acme.NewClient` function now expects an `acme.KeyType` instead of the keyBits parameter.
  
 ### Removed
+
 - CLI: The `rsa-key-size` switch was removed in favor of `key-type` to support EC keys.
 
 ### Fixed
+
 - lib: Fixed a race condition in HTTP-01
 - lib: Fixed an issue where status codes on ACME challenge responses could lead to no action being taken.
 - lib: Fixed a regression when calling the Renew function with a SAN certificate.
 
-## [0.2.0] - 2016-01-09
+## [0.2.0](https://github.com/go-acme/lego/releases/tag/0.2.0) (2016-01-09)
 
-### Added:
+### Added
+
 - CLI: The `--exclude` or `-x` switch. To exclude a challenge from being solved.
 - CLI: The `--http` switch. To set the listen address and port of HTTP based challenges. Supports `host:port` and `:port` for any interface.
 - CLI: The `--tls` switch. To set the listen address and port of TLS based challenges. Supports `host:port` and `:port` for any interface.
@@ -1132,41 +1317,43 @@ There was a problem when creating the tag v3.0.1, this tag has been invalidated.
 - lib: SetTLSAddress function. Pass a port to set the listen port of TLS based challenges.
 - lib: acme.UserAgent variable. Use this to customize the user agent on all requests sent by lego.
 
-### Changed:
+### Changed
+
 - lib: NewClient does no longer accept the optPort parameter
 - lib: ObtainCertificate now returns a SAN certificate if you pass more than one domain.
 - lib: GetOCSPForCert now returns the parsed OCSP response instead of just the status.
 - lib: ObtainCertificate has a new parameter `privKey crypto.PrivateKey` which lets you reuse an existing private key for new certificates.
 - lib: RenewCertificate now expects the PrivateKey property of the CertificateResource to be set only if you want to reuse the key.
 
-### Removed:
+### Removed
+
 - CLI: The `--port` switch was removed.
 - lib: RenewCertificate does no longer offer to also revoke your old certificate.
 
-### Fixed:
+### Fixed
+
 - CLI: Fix logic using the `--days` parameter for renew
 
-## [0.1.1] - 2015-12-18
+## [0.1.1](https://github.com/go-acme/lego/releases/tag/0.1.1) (2015-12-18)
 
-### Added:
+### Added
+
 - CLI: Added a way to automate renewal through a cronjob using the --days parameter to renew
 
-### Changed:
+### Changed
+
 - lib: Improved log output on challenge failures.
 
-### Fixed:
+### Fixed
+
 - CLI: The short parameter for domains would not get accepted
 - CLI: The cli did not return proper exit codes on error library errors.
 - lib: RenewCertificate did not properly renew SAN certificates.
 
 ### Security
+
 - lib: Fix possible DOS on GetOCSPForCert
 
-## [0.1.0] - 2015-12-03
-- Initial release
+## [0.1.0](https://github.com/go-acme/lego/releases/tag/0.1.0) (2015-12-03)
 
-[0.3.1]: https://github.com/go-acme/lego/compare/v0.3.0...v0.3.1
-[0.3.0]: https://github.com/go-acme/lego/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/go-acme/lego/compare/v0.1.1...v0.2.0
-[0.1.1]: https://github.com/go-acme/lego/compare/v0.1.0...v0.1.1
-[0.1.0]: https://github.com/go-acme/lego/tree/v0.1.0
+- Initial release

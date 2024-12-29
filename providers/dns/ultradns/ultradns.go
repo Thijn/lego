@@ -6,8 +6,10 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-acme/lego/v4/challenge"
 	"github.com/go-acme/lego/v4/challenge/dns01"
 	"github.com/go-acme/lego/v4/platform/config/env"
+	"github.com/go-acme/lego/v4/providers/dns/internal/useragent"
 	"github.com/ultradns/ultradns-go-sdk/pkg/client"
 	"github.com/ultradns/ultradns-go-sdk/pkg/record"
 	"github.com/ultradns/ultradns-go-sdk/pkg/rrset"
@@ -24,11 +26,11 @@ const (
 	EnvTTL                = envNamespace + "TTL"
 	EnvPropagationTimeout = envNamespace + "PROPAGATION_TIMEOUT"
 	EnvPollingInterval    = envNamespace + "POLLING_INTERVAL"
-
-	// Default variables names.
-	defaultEndpoint  = "https://api.ultradns.com/"
-	defaultUserAgent = "lego-provider-ultradns"
 )
+
+const defaultEndpoint = "https://api.ultradns.com/"
+
+var _ challenge.ProviderTimeout = (*DNSProvider)(nil)
 
 // DNSProvider implements the challenge.Provider interface.
 type DNSProvider struct {
@@ -83,7 +85,7 @@ func NewDNSProviderConfig(config *Config) (*DNSProvider, error) {
 		Username:  config.Username,
 		Password:  config.Password,
 		HostURL:   config.Endpoint,
-		UserAgent: defaultUserAgent,
+		UserAgent: useragent.Get(),
 	}
 
 	uClient, err := client.NewClient(ultraConfig)

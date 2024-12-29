@@ -28,7 +28,7 @@ Here is an example bash command using the Name.com provider:
 ```bash
 NAMECOM_USERNAME=foo.bar \
 NAMECOM_API_TOKEN=a379a6f6eeafb9a55e378c118034e2751e682fab \
-lego --email you@example.com --dns namedotcom --domains my.example.org run
+lego --email you@example.com --dns namedotcom -d '*.example.com' -d example.com run
 ```
 
 
@@ -42,7 +42,7 @@ lego --email you@example.com --dns namedotcom --domains my.example.org run
 | `NAMECOM_USERNAME` | Username |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -55,7 +55,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `NAMECOM_TTL` | The TTL of the TXT record used for the DNS challenge |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 

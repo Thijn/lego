@@ -28,7 +28,7 @@ Here is an example bash command using the Aurora DNS provider:
 ```bash
 AURORA_API_KEY=xxxxx \
 AURORA_SECRET=yyyyyy \
-lego --email you@example.com --dns auroradns --domains my.example.org run
+lego --email you@example.com --dns auroradns -d '*.example.com' -d example.com run
 ```
 
 
@@ -42,7 +42,7 @@ lego --email you@example.com --dns auroradns --domains my.example.org run
 | `AURORA_SECRET` | Secret password to be used |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -55,7 +55,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `AURORA_TTL` | The TTL of the TXT record used for the DNS challenge |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 

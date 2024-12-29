@@ -32,14 +32,20 @@ OVH_APPLICATION_KEY=1234567898765432 \
 OVH_APPLICATION_SECRET=b9841238feb177a84330febba8a832089 \
 OVH_CONSUMER_KEY=256vfsd347245sdfg \
 OVH_ENDPOINT=ovh-eu \
-lego --email you@example.com --dns ovh --domains my.example.org run
+lego --email you@example.com --dns ovh -d '*.example.com' -d example.com run
+
+# Or Access Token:
+
+OVH_ACCESS_TOKEN=xxx \
+OVH_ENDPOINT=ovh-eu \
+lego --email you@example.com --dns ovh -d '*.example.com' -d example.com run
 
 # Or OAuth2:
 
 OVH_CLIENT_ID=yyy \
 OVH_CLIENT_SECRET=xxx \
 OVH_ENDPOINT=ovh-eu \
-lego --email you@example.com --dns ovh --domains my.example.org run
+lego --email you@example.com --dns ovh -d '*.example.com' -d example.com run
 ```
 
 
@@ -49,6 +55,7 @@ lego --email you@example.com --dns ovh --domains my.example.org run
 
 | Environment Variable Name | Description |
 |-----------------------|-------------|
+| `OVH_ACCESS_TOKEN` | Access token |
 | `OVH_APPLICATION_KEY` | Application key (Application Key authentication) |
 | `OVH_APPLICATION_SECRET` | Application secret (Application Key authentication) |
 | `OVH_CLIENT_ID` | Client ID (OAuth2) |
@@ -57,7 +64,7 @@ lego --email you@example.com --dns ovh --domains my.example.org run
 | `OVH_ENDPOINT` | Endpoint URL (ovh-eu or ovh-ca) |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -70,7 +77,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `OVH_TTL` | The TTL of the TXT record used for the DNS challenge |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 ## Application Key and Secret
 

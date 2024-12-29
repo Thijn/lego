@@ -27,7 +27,7 @@ Here is an example bash command using the Yandex PDD provider:
 
 ```bash
 YANDEX_PDD_TOKEN=<your PDD Token> \
-lego --email you@example.com --dns yandex --domains my.example.org run
+lego --email you@example.com --dns yandex -d '*.example.com' -d example.com run
 ```
 
 
@@ -40,7 +40,7 @@ lego --email you@example.com --dns yandex --domains my.example.org run
 | `YANDEX_PDD_TOKEN` | Basic authentication username |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -53,7 +53,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `YANDEX_TTL` | The TTL of the TXT record used for the DNS challenge |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 

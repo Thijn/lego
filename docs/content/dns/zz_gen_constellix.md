@@ -28,7 +28,7 @@ Here is an example bash command using the Constellix provider:
 ```bash
 CONSTELLIX_API_KEY=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx \
 CONSTELLIX_SECRET_KEY=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx \
-lego --email you@example.com --dns constellix --domains my.example.org run
+lego --email you@example.com --dns constellix -d '*.example.com' -d example.com run
 ```
 
 
@@ -42,7 +42,7 @@ lego --email you@example.com --dns constellix --domains my.example.org run
 | `CONSTELLIX_SECRET_KEY` | User secret key |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -55,7 +55,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `CONSTELLIX_TTL` | The TTL of the TXT record used for the DNS challenge |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 

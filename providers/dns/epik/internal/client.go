@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/go-acme/lego/v4/providers/dns/internal/errutils"
+	"github.com/go-acme/lego/v4/providers/dns/internal/useragent"
 )
 
 const defaultBaseURL = "https://usersapiv2.epik.com/v2"
@@ -97,6 +98,8 @@ func (c Client) RemoveHostRecord(ctx context.Context, domain string, recordID st
 }
 
 func (c Client) do(req *http.Request, result any) error {
+	useragent.SetHeader(req.Header)
+
 	resp, err := c.HTTPClient.Do(req)
 	if err != nil {
 		return errutils.NewHTTPDoError(req, err)

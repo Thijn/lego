@@ -27,7 +27,7 @@ Here is an example bash command using the Variomedia provider:
 
 ```bash
 VARIOMEDIA_API_TOKEN=xxxx \
-lego --email you@example.com --dns variomedia --domains my.example.org run
+lego --email you@example.com --dns variomedia -d '*.example.com' -d example.com run
 ```
 
 
@@ -40,21 +40,21 @@ lego --email you@example.com --dns variomedia --domains my.example.org run
 | `VARIOMEDIA_API_TOKEN` | API token |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
 
 | Environment Variable Name | Description |
 |--------------------------------|-------------|
-| `DODE_SEQUENCE_INTERVAL` | Time between sequential requests |
 | `VARIOMEDIA_HTTP_TIMEOUT` | API request timeout |
 | `VARIOMEDIA_POLLING_INTERVAL` | Time between DNS propagation check |
 | `VARIOMEDIA_PROPAGATION_TIMEOUT` | Maximum waiting time for DNS propagation |
+| `VARIOMEDIA_SEQUENCE_INTERVAL` | Time between sequential requests |
 | `VARIOMEDIA_TTL` | The TTL of the TXT record used for the DNS challenge |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 

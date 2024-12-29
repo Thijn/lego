@@ -28,7 +28,7 @@ Here is an example bash command using the Sonic provider:
 ```bash
 SONIC_USER_ID=12345 \
 SONIC_API_KEY=4d6fbf2f9ab0fa11697470918d37625851fc0c51 \
-lego --email you@example.com --dns sonic --domains my.example.org run
+lego --email you@example.com --dns sonic -d '*.example.com' -d example.com run
 ```
 
 
@@ -42,7 +42,7 @@ lego --email you@example.com --dns sonic --domains my.example.org run
 | `SONIC_USER_ID` | User ID |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -56,7 +56,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `SONIC_TTL` | The TTL of the TXT record used for the DNS challenge |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 ## API keys
 

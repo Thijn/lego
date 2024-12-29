@@ -28,7 +28,7 @@ Here is an example bash command using the IIJ DNS Platform Service provider:
 ```bash
 IIJ_DPF_API_TOKEN=xxxxxxxx \
 IIJ_DPF_DPM_SERVICE_CODE=yyyyyy \
-lego --email you@example.com --dns iijdpf --domains my.example.org run
+lego --email you@example.com --dns iijdpf -d '*.example.com' -d example.com run
 ```
 
 
@@ -42,7 +42,7 @@ lego --email you@example.com --dns iijdpf --domains my.example.org run
 | `IIJ_DPF_DPM_SERVICE_CODE` | IIJ Managed DNS Service's service code |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -55,7 +55,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `IIJ_DPF_TTL` | The TTL of the TXT record used for the DNS challenge, default to 300 |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 

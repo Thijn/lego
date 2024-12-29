@@ -28,7 +28,7 @@ Here is an example bash command using the Domeneshop provider:
 ```bash
 DOMENESHOP_API_TOKEN=<token> \
 DOMENESHOP_API_SECRET=<secret> \
-lego --email example@example.com --dns domeneshop --domains example.com run
+lego --email example@example.com --dns domeneshop -d '*.example.com' -d example.com run
 ```
 
 
@@ -42,7 +42,7 @@ lego --email example@example.com --dns domeneshop --domains example.com run
 | `DOMENESHOP_API_TOKEN` | API token |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -54,7 +54,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `DOMENESHOP_PROPAGATION_TIMEOUT` | Maximum waiting time for DNS propagation |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 ### API credentials
 

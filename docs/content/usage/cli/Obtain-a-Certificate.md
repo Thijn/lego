@@ -45,19 +45,33 @@ If you're looking for a `cert.pem` and `privkey.pem`, you can just use `example.
 ## Using a DNS provider
 
 If you can't or don't want to start a web server, you need to use a DNS provider.
-lego comes with [support for many]({{< ref "dns#dns-providers" >}}) providers,
+lego comes with [support for many]({{% ref "dns#dns-providers" %}}) providers,
 and you need to pick the one where your domain's DNS settings are set up.
 Typically, this is the registrar where you bought the domain, but in some cases this can be another third-party provider.
 
-For this example, let's assume you have set up CloudFlare for your domain.
+For this example, let's assume you have set up Gandi for your domain.
 
 Execute this command:
 
 ```bash
-CLOUDFLARE_EMAIL="you@example.com" \
-CLOUDFLARE_API_KEY="yourprivatecloudflareapikey" \
-lego --email "you@example.com" --dns cloudflare --domains "example.org" run
+GANDI_API_KEY=xxx \
+lego --email "you@example.com" --dns gandi --domains "example.org" --domains "*.example.org" run
 ```
+
+{{% notice title="For a zone that has multiple SOAs" icon="info-circle" %}}
+
+This can often be found where your DNS provider has a zone entry for an internal network (i.e. a corporate network, or home LAN) as well as the public internet.
+In this case, point lego at an external authoritative server for the zone using the additional parameter `--dns.resolvers`.
+
+```bash
+GANDI_API_KEY=xxx \
+lego --email "you@example.com" --dns gandi --dns.resolvers 9.9.9.9:53 --domains "example.org" --domains "*.example.org" run
+
+```
+
+[More information about resolvers.]({{% ref "options#dns-resolvers-and-challenge-verification" %}})
+
+{{% /notice %}}
 
 
 ## Using a custom certificate signing request (CSR)

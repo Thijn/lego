@@ -28,13 +28,13 @@ Here is an example bash command using the Alibaba Cloud DNS provider:
 ```bash
 # Setup using instance RAM role
 ALICLOUD_RAM_ROLE=lego \
-lego --email you@example.com --dns alidns --domains my.example.org run
+lego --email you@example.com --dns alidns -d '*.example.com' -d example.com run
 
 # Or, using credentials
 ALICLOUD_ACCESS_KEY=abcdefghijklmnopqrstuvwx \
 ALICLOUD_SECRET_KEY=your-secret-key \
 ALICLOUD_SECURITY_TOKEN=your-sts-token \
-lego --email you@example.com --dns alidns --domains my.example.org run
+lego --email you@example.com --dns alidns - -d '*.example.com' -d example.com run
 ```
 
 
@@ -50,7 +50,7 @@ lego --email you@example.com --dns alidns --domains my.example.org run
 | `ALICLOUD_SECURITY_TOKEN` | STS Security Token (optional) |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -63,7 +63,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `ALICLOUD_TTL` | The TTL of the TXT record used for the DNS challenge |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 

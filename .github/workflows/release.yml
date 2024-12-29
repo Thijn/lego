@@ -64,10 +64,11 @@ jobs:
 
       # https://goreleaser.com/ci/actions/
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v5
+        uses: goreleaser/goreleaser-action@v6
         with:
           version: latest
           args: release -p 1 --clean --timeout=90m
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN_REPO }}
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
+          AUR_KEY: ${{ secrets.AUR_KEY }}

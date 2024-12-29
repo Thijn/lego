@@ -10,12 +10,11 @@ import (
 	"strings"
 	"time"
 
+	"github.com/go-acme/lego/v4/challenge"
 	"github.com/go-acme/lego/v4/challenge/dns01"
 	"github.com/go-acme/lego/v4/platform/config/env"
 	"github.com/go-acme/lego/v4/providers/dns/ionos/internal"
 )
-
-const minTTL = 300
 
 // Environment variables names.
 const (
@@ -28,6 +27,10 @@ const (
 	EnvPollingInterval    = envNamespace + "POLLING_INTERVAL"
 	EnvHTTPTimeout        = envNamespace + "HTTP_TIMEOUT"
 )
+
+const minTTL = 300
+
+var _ challenge.ProviderTimeout = (*DNSProvider)(nil)
 
 // Config is used to configure the creation of the DNSProvider.
 type Config struct {
@@ -113,14 +116,15 @@ func (d *DNSProvider) Present(domain, _, keyAuth string) error {
 		return fmt.Errorf("ionos: failed to get zones: %w", err)
 	}
 
-	// TODO(ldez) replace domain by FQDN to follow CNAME.
-	zone := findZone(zones, domain)
+	name := dns01.UnFqdn(info.EffectiveFQDN)
+
+	zone := findZone(zones, name)
 	if zone == nil {
 		return errors.New("ionos: no matching zone found for domain")
 	}
 
 	filter := &internal.RecordsFilter{
-		Suffix:     dns01.UnFqdn(info.EffectiveFQDN),
+		Suffix:     name,
 		RecordType: "TXT",
 	}
 
@@ -130,7 +134,7 @@ func (d *DNSProvider) Present(domain, _, keyAuth string) error {
 	}
 
 	records = append(records, internal.Record{
-		Name:    dns01.UnFqdn(info.EffectiveFQDN),
+		Name:    name,
 		Content: info.Value,
 		TTL:     d.config.TTL,
 		Type:    "TXT",
@@ -155,14 +159,15 @@ func (d *DNSProvider) CleanUp(domain, _, keyAuth string) error {
 		return fmt.Errorf("ionos: failed to get zones: %w", err)
 	}
 
-	// TODO(ldez) replace domain by FQDN to follow CNAME.
-	zone := findZone(zones, domain)
+	name := dns01.UnFqdn(info.EffectiveFQDN)
+
+	zone := findZone(zones, name)
 	if zone == nil {
 		return errors.New("ionos: no matching zone found for domain")
 	}
 
 	filter := &internal.RecordsFilter{
-		Suffix:     dns01.UnFqdn(info.EffectiveFQDN),
+		Suffix:     name,
 		RecordType: "TXT",
 	}
 
@@ -172,7 +177,7 @@ func (d *DNSProvider) CleanUp(domain, _, keyAuth string) error {
 	}
 
 	for _, record := range records {
-		if record.Name == dns01.UnFqdn(info.EffectiveFQDN) && record.Content == strconv.Quote(info.Value) {
+		if record.Name == name && record.Content == strconv.Quote(info.Value) {
 			err = d.client.RemoveRecord(ctx, zone.ID, record.ID)
 			if err != nil {
 				return fmt.Errorf("ionos: failed to remove record (zone=%s, record=%s): %w", zone.ID, record.ID, err)

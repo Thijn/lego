@@ -29,7 +29,7 @@ Here is an example bash command using the DirectAdmin provider:
 DIRECTADMIN_API_URL="http://example.com:2222" \
 DIRECTADMIN_USERNAME=xxxx \
 DIRECTADMIN_PASSWORD=yyy \
-lego --email you@example.com --dns directadmin --domains my.example.org run
+lego --email you@example.com --dns directadmin -d '*.example.com' -d example.com run
 ```
 
 
@@ -44,7 +44,7 @@ lego --email you@example.com --dns directadmin --domains my.example.org run
 | `DIRECTADMIN_USERNAME` | API username |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -58,7 +58,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `DIRECTADMIN_ZONE_NAME` | Zone name used to add the TXT record |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 

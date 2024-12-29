@@ -26,12 +26,9 @@ Configuration for [Google Cloud](https://cloud.google.com).
 Here is an example bash command using the Google Cloud provider:
 
 ```bash
-GCE_PROJECT="gc-project-id" GCE_SERVICE_ACCOUNT_FILE="/path/to/svc/account/file.json" lego \
-    --email="abc@email.com" \
-    --domains="example.com" \
-    --dns="gcloud" \
-    --path="${HOME}/.lego" \
-    run
+GCE_PROJECT="gc-project-id" \
+GCE_SERVICE_ACCOUNT_FILE="/path/to/svc/account/file.json" \
+lego --email you@email.com --dns gcloud -d '*.example.com' -d example.com run
 ```
 
 
@@ -47,7 +44,7 @@ GCE_PROJECT="gc-project-id" GCE_SERVICE_ACCOUNT_FILE="/path/to/svc/account/file.
 | `GCE_SERVICE_ACCOUNT_FILE` | Account file path |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -61,7 +58,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `GCE_ZONE_ID` | Allows to skip the automatic detection of the zone |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 

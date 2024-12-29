@@ -8,8 +8,10 @@ import (
 	"sync"
 	"time"
 
+	"github.com/go-acme/lego/v4/challenge"
 	"github.com/go-acme/lego/v4/challenge/dns01"
 	"github.com/go-acme/lego/v4/platform/config/env"
+	"github.com/go-acme/lego/v4/providers/dns/internal/useragent"
 	"github.com/ovh/go-ovh/ovh"
 )
 
@@ -42,6 +44,11 @@ const (
 	EnvClientSecret = envNamespace + "CLIENT_SECRET"
 )
 
+// EnvAccessToken Authenticate using Access Token client.
+const EnvAccessToken = envNamespace + "ACCESS_TOKEN"
+
+var _ challenge.ProviderTimeout = (*DNSProvider)(nil)
+
 // Record a DNS record.
 type Record struct {
 	ID        int64  `json:"id,omitempty"`
@@ -67,6 +74,8 @@ type Config struct {
 	ConsumerKey       string
 
 	OAuth2Config *OAuth2Config
+
+	AccessToken string
 
 	PropagationTimeout time.Duration
 	PollingInterval    time.Duration
@@ -111,6 +120,8 @@ func NewDNSProvider() (*DNSProvider, error) {
 	config.ApplicationSecret = env.GetOrFile(EnvApplicationSecret)
 	config.ConsumerKey = env.GetOrFile(EnvConsumerKey)
 
+	config.AccessToken = env.GetOrFile(EnvAccessToken)
+
 	clientID := env.GetOrFile(EnvClientID)
 	clientSecret := env.GetOrFile(EnvClientSecret)
 
@@ -130,8 +141,20 @@ func NewDNSProviderConfig(config *Config) (*DNSProvider, error) {
 		return nil, errors.New("ovh: the configuration of the DNS provider is nil")
 	}
 
+	if config.OAuth2Config != nil && config.hasAppKeyAuth() && config.AccessToken != "" {
+		return nil, errors.New("ovh: can't use multiple authentication systems (ApplicationKey, OAuth2, Access Token)")
+	}
+
+	if config.OAuth2Config != nil && config.AccessToken != "" {
+		return nil, errors.New("ovh: can't use multiple authentication systems (OAuth2, Access Token)")
+	}
+
 	if config.OAuth2Config != nil && config.hasAppKeyAuth() {
-		return nil, errors.New("ovh: can't use both authentication systems (ApplicationKey and OAuth2)")
+		return nil, errors.New("ovh: can't use multiple authentication systems (ApplicationKey, OAuth2)")
+	}
+
+	if config.hasAppKeyAuth() && config.AccessToken != "" {
+		return nil, errors.New("ovh: can't use multiple authentication systems (ApplicationKey, Access Token)")
 	}
 
 	client, err := newClient(config)
@@ -242,6 +265,8 @@ func newClient(config *Config) (*ovh.Client, error) {
 		client, err = ovh.NewClient(config.APIEndpoint, config.ApplicationKey, config.ApplicationSecret, config.ConsumerKey)
 	case config.OAuth2Config != nil:
 		client, err = ovh.NewOAuth2Client(config.APIEndpoint, config.OAuth2Config.ClientID, config.OAuth2Config.ClientSecret)
+	case config.AccessToken != "":
+		client, err = ovh.NewAccessTokenClient(config.APIEndpoint, config.AccessToken)
 	default:
 		client, err = ovh.NewDefaultClient()
 	}
@@ -250,7 +275,7 @@ func newClient(config *Config) (*ovh.Client, error) {
 		return nil, fmt.Errorf("new client: %w", err)
 	}
 
-	client.UserAgent = "go-acme/lego"
+	client.UserAgent = useragent.Get()
 
 	return client, nil
 }

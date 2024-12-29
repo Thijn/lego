@@ -28,7 +28,7 @@ Here is an example bash command using the all-inkl provider:
 ```bash
 ALL_INKL_LOGIN=xxxxxxxxxxxxxxxxxxxxxxxxxx \
 ALL_INKL_PASSWORD=yyyyyyyyyyyyyyyyyyyyyyyyyy \
-lego --email you@example.com --dns allinkl --domains my.example.org run
+lego --email you@example.com --dns allinkl -d '*.example.com' -d example.com run
 ```
 
 
@@ -42,7 +42,7 @@ lego --email you@example.com --dns allinkl --domains my.example.org run
 | `ALL_INKL_PASSWORD` | KAS password |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -54,7 +54,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `ALL_INKL_PROPAGATION_TIMEOUT` | Maximum waiting time for DNS propagation |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 

@@ -28,7 +28,7 @@ Here is an example bash command using the Glesys provider:
 ```bash
 GLESYS_API_USER=xxxxx \
 GLESYS_API_KEY=yyyyy \
-lego --email you@example.com --dns glesys --domains my.example.org run
+lego --email you@example.com --dns glesys -d '*.example.com' -d example.com run
 ```
 
 
@@ -42,7 +42,7 @@ lego --email you@example.com --dns glesys --domains my.example.org run
 | `GLESYS_API_USER` | API user |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -55,7 +55,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `GLESYS_TTL` | The TTL of the TXT record used for the DNS challenge |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 

@@ -27,7 +27,7 @@ Here is an example bash command using the Hosting.de provider:
 
 ```bash
 HOSTINGDE_API_KEY=xxxxxxxx \
-lego --email you@example.com --dns hostingde --domains my.example.org run
+lego --email you@example.com --dns hostingde -d '*.example.com' -d example.com run
 ```
 
 
@@ -40,7 +40,7 @@ lego --email you@example.com --dns hostingde --domains my.example.org run
 | `HOSTINGDE_API_KEY` | API key |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -54,7 +54,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `HOSTINGDE_ZONE_NAME` | Zone name in ACE format |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 

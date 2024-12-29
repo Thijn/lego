@@ -28,7 +28,7 @@ Here is an example bash command using the Websupport provider:
 ```bash
 WEBSUPPORT_API_KEY="xxxxxxxxxxxxxxxxxxxxx" \
 WEBSUPPORT_SECRET="yyyyyyyyyyyyyyyyyyyyy" \
-lego --email myemail@example.com --dns websupport --domains my.example.org run
+lego --email you@example.com --dns websupport -d '*.example.com' -d example.com run
 ```
 
 
@@ -42,7 +42,7 @@ lego --email myemail@example.com --dns websupport --domains my.example.org run
 | `WEBSUPPORT_SECRET` | API secret |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -56,7 +56,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `WEBSUPPORT_TTL` | The TTL of the TXT record used for the DNS challenge |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 

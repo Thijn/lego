@@ -27,7 +27,7 @@ Here is an example bash command using the Infomaniak provider:
 
 ```bash
 INFOMANIAK_ACCESS_TOKEN=1234567898765432 \
-lego --email you@example.com --dns infomaniak --domains my.example.org run
+lego --email you@example.com --dns infomaniak -d '*.example.com' -d example.com run
 ```
 
 
@@ -40,7 +40,7 @@ lego --email you@example.com --dns infomaniak --domains my.example.org run
 | `INFOMANIAK_ACCESS_TOKEN` | Access token |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 
 ## Additional Configuration
@@ -54,7 +54,7 @@ More information [here]({{< ref "dns#configuration-and-credentials" >}}).
 | `INFOMANIAK_TTL` | The TTL of the TXT record used for the DNS challenge in seconds |
 
 The environment variable names can be suffixed by `_FILE` to reference a file instead of a value.
-More information [here]({{< ref "dns#configuration-and-credentials" >}}).
+More information [here]({{% ref "dns#configuration-and-credentials" %}}).
 
 ## Access token
 

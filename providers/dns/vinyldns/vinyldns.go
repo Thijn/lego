@@ -6,8 +6,10 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-acme/lego/v4/challenge"
 	"github.com/go-acme/lego/v4/challenge/dns01"
 	"github.com/go-acme/lego/v4/platform/config/env"
+	"github.com/go-acme/lego/v4/providers/dns/internal/useragent"
 	"github.com/vinyldns/go-vinyldns/vinyldns"
 )
 
@@ -23,6 +25,8 @@ const (
 	EnvPropagationTimeout = envNamespace + "PROPAGATION_TIMEOUT"
 	EnvPollingInterval    = envNamespace + "POLLING_INTERVAL"
 )
+
+var _ challenge.ProviderTimeout = (*DNSProvider)(nil)
 
 // Config is used to configure the creation of the DNSProvider.
 type Config struct {
@@ -84,7 +88,7 @@ func NewDNSProviderConfig(config *Config) (*DNSProvider, error) {
 		AccessKey: config.AccessKey,
 		SecretKey: config.SecretKey,
 		Host:      config.Host,
-		UserAgent: "go-acme/lego",
+		UserAgent: useragent.Get(),
 	})
 
 	client.HTTPClient.Timeout = 30 * time.Second

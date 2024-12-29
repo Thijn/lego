@@ -6,14 +6,10 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-acme/lego/v4/challenge"
 	"github.com/go-acme/lego/v4/challenge/dns01"
 	"github.com/go-acme/lego/v4/platform/config/env"
 	"github.com/nrdcg/namesilo"
-)
-
-const (
-	defaultTTL = 3600
-	maxTTL     = 2592000
 )
 
 // Environment variables names.
@@ -26,6 +22,13 @@ const (
 	EnvPropagationTimeout = envNamespace + "PROPAGATION_TIMEOUT"
 	EnvPollingInterval    = envNamespace + "POLLING_INTERVAL"
 )
+
+const (
+	defaultTTL = 3600
+	maxTTL     = 2592000
+)
+
+var _ challenge.ProviderTimeout = (*DNSProvider)(nil)
 
 // Config is used to configure the creation of the DNSProvider.
 type Config struct {
@@ -100,11 +103,6 @@ func (d *DNSProvider) Present(domain, token, keyAuth string) error {
 		return fmt.Errorf("namesilo: %w", err)
 	}
 
-	err = d.CleanUp(domain, token, keyAuth)
-	if err != nil {
-		return err
-	}
-
 	_, err = d.client.DnsAddRecord(&namesilo.DnsAddRecordParams{
 		Domain: zoneName,
 		Type:   "TXT",
@@ -139,16 +137,18 @@ func (d *DNSProvider) CleanUp(domain, _, keyAuth string) error {
 		return fmt.Errorf("namesilo: %w", err)
 	}
 
-	var lastErr error
 	for _, r := range resp.Reply.ResourceRecord {
-		if r.Type == "TXT" && (r.Host == subdomain || r.Host == dns01.UnFqdn(info.EffectiveFQDN)) {
+		if r.Type == "TXT" && r.Value == info.Value && (r.Host == subdomain || r.Host == dns01.UnFqdn(info.EffectiveFQDN)) {
 			_, err := d.client.DnsDeleteRecord(&namesilo.DnsDeleteRecordParams{Domain: zoneName, ID: r.RecordID})
 			if err != nil {
-				lastErr = fmt.Errorf("namesilo: %w", err)
+				return fmt.Errorf("namesilo: %w", err)
 			}
+
+			return nil
 		}
 	}
-	return lastErr
+
+	return fmt.Errorf("namesilo: no TXT record to delete for %s (%s)", info.EffectiveFQDN, info.Value)
 }
 
 // Timeout returns the timeout and interval to use when checking for DNS propagation.
